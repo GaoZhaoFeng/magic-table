@@ -1,5 +1,5 @@
 {
-  "name": "vue-admin-beautiful-antdv",
+  "name": "magic-table",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -48,7 +48,6 @@
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-recess-order": "^2.3.0",
     "svg-sprite-loader": "^5.2.1",
-    "vab-config": "0.0.8",
     "webpackbar": "^5.0.0-3"
   },
   "gitHooks": {
