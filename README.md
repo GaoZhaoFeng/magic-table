@@ -1,4 +1,4 @@
-# springboot2-vue3-table-admin
+# magic-table
 
 #### 介绍
 专注于高定制化在线表格管理~基于SpringBoot2.4 + Vue3 + Ant Design Vue2 + Ag-Grid + MongoDB
