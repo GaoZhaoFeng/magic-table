@@ -5,9 +5,7 @@
 + node:10.15.0
 + npm:6.14.11
 
-## 启动
-```cmd
-npm install
-npm run serve
-npm run build
-```
+## 相关命令
++ 安装依赖：`npm install`
++ 启动项目：`npm run serve`
++ 源码编译：`npm run build`
