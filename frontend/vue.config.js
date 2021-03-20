@@ -46,8 +46,8 @@ module.exports = {
       warnings: true,
       errors: true,
     },
-    // 前端配置代理访问后端API
-    proxy: 'http://localhost:9527/api',
+    // 前端配置代理访问后端
+    proxy: 'http://localhost:9527',
   },
   configureWebpack () {
     return {

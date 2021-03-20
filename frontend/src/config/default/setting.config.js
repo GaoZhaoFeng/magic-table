@@ -12,9 +12,8 @@ const setting = {
   lintOnSave: true,
   //进行编译的依赖
   transpileDependencies: ['vue-echarts', 'resize-detector'],
-  //默认的接口地址 如果是开发环境和生产环境走vab-mock-server，当然你也可以选择自己配置成需要的接口地址
-  baseURL:
-    process.env.NODE_ENV === 'development' ? 'mock-server' : 'mock-server',
+  // 开发环境自己配置/api，生产环境在nginx侧配置/api，这里就不需要配置了
+  baseURL: process.env.NODE_ENV === 'development' ? '/api' : '/',
   //标题 （包括初次加载雪花屏的标题 页面的标题 浏览器的标题）
   title: 'magic-table',
   //标题分隔符
