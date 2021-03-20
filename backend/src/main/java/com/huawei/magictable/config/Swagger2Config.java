@@ -49,7 +49,7 @@ public class Swagger2Config {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("magic-table: 在线表格系统")
+                .title("Magic Table: 高可定制化web表格系统")
                 .description("design by 梁山广 at 2021 based on springboot2 and vue3")
                 .termsOfServiceUrl("https://gitee.com/lsgwr/magic-table")
                 .version("1.0.0")
