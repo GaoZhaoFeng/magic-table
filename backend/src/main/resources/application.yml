@@ -8,6 +8,14 @@ spring:
     multipart:
       max-file-size: 100MB # 最大支持文件大小
       max-request-size: 100MB # 最大支持请求大小
+  data:
+    mongodb:
+      authentication-database: admin
+      host: localhost
+      port: 27017
+      database: magictable
+      username: admin
+      password: tooldev
 
 # 接口文档配置
 swagger:
