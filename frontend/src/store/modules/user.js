@@ -2,7 +2,7 @@
  * @author chuzhixin 1204505056@qq.com
  * @description 登录、获取用户信息、退出登录、清除accessToken逻辑，不建议修改
  */
-import { getUserInfo, login, logout } from '@/api/user'
+import { getUserInfo, login } from '@/api/user'
 import {
   getAccessToken,
   removeAccessToken,
@@ -70,7 +70,7 @@ const actions = {
    */
   async login({ commit }, userInfo) {
     const { data } = await login(userInfo)
-    const accessToken = data[tokenName]
+    const accessToken = data
     if (accessToken) {
       commit('setAccessToken', accessToken)
       const hour = new Date().getHours()
@@ -98,8 +98,8 @@ const actions = {
    * @param {*} { commit, dispatch, state }
    * @returns
    */
-  async getUserInfo({ commit, dispatch, state }) {
-    const { data } = await getUserInfo(state.accessToken)
+  async getUserInfo({ commit, dispatch }) {
+    const { data } = await getUserInfo()
     if (!data) {
       message.error(`验证失败，请重新登录...`)
       return false
@@ -122,7 +122,6 @@ const actions = {
    * @param {*} { dispatch }
    */
   async logout({ dispatch }) {
-    await logout(state.accessToken)
     await dispatch('resetAll')
   },
   /**
