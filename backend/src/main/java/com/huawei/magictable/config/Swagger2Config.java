@@ -28,7 +28,6 @@ import java.util.List;
 public class Swagger2Config {
     @Bean
     public Docket api() {
-
         ParameterBuilder ticketPar = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<>();
         ticketPar.name("accessToken").description("Rest接口权限认证token,无需鉴权可为空")
@@ -50,7 +49,7 @@ public class Swagger2Config {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("magic table 在线表格系统")
+                .title("magic-table: 在线表格系统")
                 .description("design by 梁山广 at 2021 based on springboot2 and vue3")
                 .termsOfServiceUrl("https://gitee.com/lsgwr/magic-table")
                 .version("1.0.0")

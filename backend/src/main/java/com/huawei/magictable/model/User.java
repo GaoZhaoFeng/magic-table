@@ -7,6 +7,7 @@
 package com.huawei.magictable.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,8 +26,14 @@ public class User {
     @Id
     private String id;
     private String username;
+    /**
+     * 密码不要返回，防止泄露
+     */
+    @JsonIgnore
     private String password;
     private String nickname;
+    private String email;
+    private String phone;
     private String desc;
     private String avatar;
 
@@ -35,4 +42,7 @@ public class User {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date lastLoginTime;
 }

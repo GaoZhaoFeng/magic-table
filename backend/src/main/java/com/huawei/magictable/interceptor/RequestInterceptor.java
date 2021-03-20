@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.huawei.magictable.util.JwtUtils;
 import com.huawei.magictable.vo.JsonData;
 import io.jsonwebtoken.Claims;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -24,6 +25,7 @@ import java.io.PrintWriter;
  * @author liangshanguang
  */
 @Component
+@Slf4j
 public class RequestInterceptor implements HandlerInterceptor {
 
     /**
@@ -43,17 +45,17 @@ public class RequestInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("进入拦截器啦！");
         String uri = request.getRequestURI();
-        System.out.println(uri);
+        log.info("接口进入拦截器啦：" + uri);
         String[] authIgnoreUriArr = authIgnoreUris.split(",");
         // 登录和注册接口不需要进行token拦截和校验
         for (String authIgnoreUri : authIgnoreUriArr) {
             if (authIgnoreUri.equals(uri)) {
-                System.out.println("无需拦截的接口路径：" + uri);
+                log.info("无需拦截的接口路径：" + uri);
                 return true;
             }
         }
+        log.info("需要拦截的接口路径：" + uri);
         // 注意要和前端适配accessToken属性，前端会在登陆后的每个接口请求头加accessToken属性
         String token = request.getHeader("accessToken");
         if (token == null) {
