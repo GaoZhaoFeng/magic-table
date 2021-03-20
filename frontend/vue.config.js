@@ -31,14 +31,6 @@ const resolve = (dir) => {
   return path.join(__dirname, dir)
 }
 
-const mockServer = () => {
-  if (process.env.NODE_ENV === 'development') {
-    return require('./mock/mockServer.js')
-  } else {
-    return ''
-  }
-}
-
 module.exports = {
   publicPath,
   assetsDir,
@@ -54,20 +46,10 @@ module.exports = {
       warnings: true,
       errors: true,
     },
-    // 注释掉的地方是前端配置代理访问后端的示例
-    // proxy: {
-    //   [baseURL]: {
-    //     target: `http://你的后端接口地址`,
-    //     ws: true,
-    //     changeOrigin: true,
-    //     pathRewrite: {
-    //       ["^/" + baseURL]: "",
-    //     },
-    //   },
-    // },
-    after: mockServer(),
+    // 前端配置代理访问后端API
+    proxy: 'http://localhost:9527/api',
   },
-  configureWebpack() {
+  configureWebpack () {
     return {
       resolve: {
         alias: {
@@ -83,7 +65,7 @@ module.exports = {
       ],
     }
   },
-  chainWebpack(config) {
+  chainWebpack (config) {
     config.resolve.symlinks(true)
     config.module.rule('svg').exclude.add(resolve('src/icon/remixIcon')).end()
 
