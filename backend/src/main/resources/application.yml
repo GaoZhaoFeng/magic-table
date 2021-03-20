@@ -1,1 +1,26 @@
+server:
+  port: 9527
+
+spring:
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 100MB # 最大支持文件大小
+      max-request-size: 100MB # 最大支持请求大小
+
+# 接口文档配置
+swagger:
+  base-package: com.huawei.magictable.controller
+  contact:
+    email: liangshanguang2@gmail.com
+    name: liangshanguang
+    url: https://github.com/19920625lsg
+  description: 在线表格系统，零代码开发平台
+  license: AGPL3.0
+  licenseUrl: https://www.gnu.org/licenses/agpl-3.0.txt
+  termsOfServiceUrl: https://github.com/dyc87112/spring-boot-starter-swagger
+  title: magic-table
+  version: 1.1.0
+
 
