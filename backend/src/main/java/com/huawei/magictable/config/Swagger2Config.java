@@ -50,10 +50,10 @@ public class Swagger2Config {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Magic Table: 高可定制化web表格系统")
-                .description("design by 梁山广 at 2021 based on springboot2 and vue3")
+                .description("based on springboot2 and vue3")
                 .termsOfServiceUrl("https://gitee.com/lsgwr/magic-table")
                 .version("1.0.0")
-                .contact(new Contact("liangshanguang", "https://github.com/19920625lsg", "liangshanguang2@gmail.com"))
+                .contact(new Contact("梁山广", "https://github.com/19920625lsg", "liangshanguang2@gmail.com"))
                 .build();
     }
 }
