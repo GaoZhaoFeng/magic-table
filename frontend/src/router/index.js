@@ -74,6 +74,36 @@ export const asyncRoutes = [
     ],
   },
   {
+    path: '/aggrid',
+    component: Layout,
+    redirect: '/aggrid/demo01',
+    alwaysShow: true,
+    meta: {
+      title: '组件',
+      icon: 'grid-fill',
+    },
+    children: [
+      {
+        path: 'demo01',
+        name: 'Demo01',
+        component: () => import('@/views/aggrid/demo01'),
+        meta: {
+          title: 'demo01',
+          icon: 'layout-grid-fill',
+        },
+      },
+      {
+        path: 'icon',
+        name: 'Icon',
+        component: () => import('@/views/vab/icon'),
+        meta: {
+          title: '图标',
+          icon: 'remixicon-line',
+        },
+      },
+    ],
+  },
+  {
     path: '/error',
     name: 'Error',
     component: Layout,
