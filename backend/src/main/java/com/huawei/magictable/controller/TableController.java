@@ -12,13 +12,11 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.bson.BsonDocument;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.web.bind.annotation.*;
-import sun.tools.jconsole.JConsole;
 
 import java.util.ArrayList;
 import java.util.List;
