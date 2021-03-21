@@ -25,9 +25,9 @@
     },
     beforeMount() {
       this.columnDefs = [
-        { field: 'make', sortable: true },
-        { field: 'model', sortable: true },
-        { field: 'price', sortable: true },
+        { field: 'make', sortable: true, filter: true },
+        { field: 'model', sortable: true, filter: true },
+        { field: 'price', sortable: true, filter: true },
       ]
 
       this.rowData = [
