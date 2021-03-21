@@ -14,7 +14,7 @@ public interface UserService {
     /**
      * 注册
      *
-     * @param registerDTO 注册参数
+     * @param registerVo 注册参数
      * @return 注册成功后的用户信息
      */
     User register(RegisterVo registerVo);
