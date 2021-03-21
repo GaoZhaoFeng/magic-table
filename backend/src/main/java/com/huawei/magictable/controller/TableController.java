@@ -30,14 +30,32 @@ public class TableController {
     @Autowired
     MongoTemplate mongoTemplate;
 
+    /**
+     * 根据查询条件得到分页查询结果
+     * @param table 表名
+     * @param pageNum 第几页
+     * @param pageSize 每页多少条
+     * @param filter 查询语法，参考https://www.runoob.com/mongodb/mongodb-query.html 举例如下：
+     * {
+     *     "age": {
+     *         "$gt": 40,
+     *         "$lt": 70
+     *     },
+     *     "driver": {
+     *         "$regex": "金"
+     *     }
+     * }
+     * @return 符合条件的记录数
+     */
     @PostMapping("/page_data")
     @ApiOperation("获取用户信息")
     List<JSONObject> getPageData(@RequestParam String table, @RequestParam int pageNum,
                                  @RequestParam int pageSize, @RequestBody JSONObject filter) {
         List<JSONObject> docs = new ArrayList<>();
+        // json必须转换为bson才能进行查询
         Bson filterBson = Document.parse(filter.toString());
         MongoCollection<Document> collection = mongoTemplate.getCollection(table);
-        // Todo：注意这里的find是可以传入各种查询条件的，这里没有查询条件，所以传入为空，查所有数据。后面前端筛选这里肯定用地到
+        // 注意这里的find是可以传入各种查询条件的，查所有数据前端传入个{}就行，查询指定条件传例如
         FindIterable<Document> documents = collection.find(filterBson).skip((pageNum - 1) * pageSize).limit(pageSize);
         for (Document document : documents) {
             docs.add((JSONObject) JSON.parse(document.toJson()));
