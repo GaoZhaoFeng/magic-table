@@ -21,7 +21,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 拦截指定的namespace下的api
-        registry.addInterceptor(requestInterceptor).addPathPatterns("/user/**").addPathPatterns("/exam/**");
+        registry.addInterceptor(requestInterceptor).addPathPatterns("/user/**").addPathPatterns("/table/**");
     }
 
 }
