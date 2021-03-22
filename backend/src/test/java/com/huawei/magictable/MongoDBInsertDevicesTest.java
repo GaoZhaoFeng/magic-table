@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
-class MongoDBInsertDataTests {
+class MongoDBInsertDevicesTest {
 
     @Autowired
     MongoTemplate mongoTemplate;
