@@ -79,7 +79,7 @@ export const asyncRoutes = [
     redirect: '/aggrid/demo01',
     alwaysShow: true,
     meta: {
-      title: '组件',
+      title: 'AdGrid学习',
       icon: 'grid-fill',
     },
     children: [
@@ -90,15 +90,6 @@ export const asyncRoutes = [
         meta: {
           title: 'demo01',
           icon: 'layout-grid-fill',
-        },
-      },
-      {
-        path: 'icon',
-        name: 'Icon',
-        component: () => import('@/views/vab/icon'),
-        meta: {
-          title: '图标',
-          icon: 'remixicon-line',
         },
       },
     ],

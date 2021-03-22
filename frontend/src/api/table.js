@@ -1,10 +1,10 @@
 import request from '@/utils/request'
 
-export function getList(params) {
+export function getPageData(params, data) {
   return request({
-    url: '/table/getList',
-    method: 'get',
+    url: '/table/page_data?',
+    method: 'post',
     params,
+    data,
   })
 }
-

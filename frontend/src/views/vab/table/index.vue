@@ -1,7 +1,7 @@
 <template>
   <a-table
     :columns="columns"
-    :row-key="(record) => record.uuid"
+    :row-key="(record) => record.id"
     :data-source="data"
     :pagination="pagination"
     :loading="loading"
@@ -9,25 +9,7 @@
   ></a-table>
 </template>
 <script>
-  import { getList } from '@/api/table'
-  const columns = [
-    {
-      title: 'title',
-      dataIndex: 'title',
-    },
-    {
-      title: 'description',
-      dataIndex: 'description',
-    },
-    {
-      title: 'author',
-      dataIndex: 'author',
-    },
-    {
-      title: 'datetime',
-      dataIndex: 'datetime',
-    },
-  ]
+  import { getPageData } from '@/api/table'
 
   export default {
     data() {
@@ -37,10 +19,33 @@
           showLessItems: true,
           showQuickJumper: true,
           showSizeChanger: true,
+          pageSize: 10,
+          current: 1,
         },
         query: {},
         loading: false,
-        columns,
+        columns: [
+          {
+            title: 'id',
+            dataIndex: 'id',
+          },
+          {
+            title: 'plate',
+            dataIndex: 'plate',
+          },
+          {
+            title: 'driver',
+            dataIndex: 'driver',
+          },
+          {
+            title: 'phone',
+            dataIndex: 'phone',
+          },
+          {
+            title: 'fuel',
+            dataIndex: 'fuel',
+          },
+        ],
       }
     },
     mounted() {
@@ -48,22 +53,40 @@
     },
     methods: {
       handleTableChange(pagination) {
-        const pager = { ...this.pagination }
-        pager.current = pagination.current
-        this.pagination = pager
+        this.pagination.current = pagination.current
         this.fetch()
       },
       fetch() {
         this.loading = true
-        getList({
+        // 分页条件
+        let params = {
+          table: 'device',
           pageSize: this.pagination.pageSize,
-          current: this.pagination.current,
-        }).then(({ data, total }) => {
-          const pagination = { ...this.pagination }
-          pagination.total = total
+          pageNum: this.pagination.current,
+        }
+        // 查询条件
+        let data = {
+          age: {
+            $gt: 40,
+            $lt: 70,
+          },
+          $or: [
+            {
+              driver: {
+                $regex: '金',
+              },
+            },
+            {
+              driver: {
+                $regex: '鲍',
+              },
+            },
+          ],
+        }
+        getPageData(params, data).then((res) => {
+          this.pagination.total = res.data.totalCnt
           this.loading = false
-          this.data = data
-          this.pagination = pagination
+          this.data = res.data.pageData
         })
       },
     },

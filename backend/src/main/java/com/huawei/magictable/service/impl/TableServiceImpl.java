@@ -13,6 +13,7 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,7 @@ public class TableServiceImpl implements TableService {
         // 注意这里的find是可以传入各种查询条件的，查所有数据前端传入个{}就行，查询指定条件传例如
         FindIterable<Document> documents = collection.find(filterBson).skip((pageNum - 1) * pageSize).limit(pageSize);
         for (Document document : documents) {
+            document.append("id", document.getObjectId("_id").toString());
             docs.add((JSONObject) JSON.parse(document.toJson()));
         }
         // 3.组装返回数据
