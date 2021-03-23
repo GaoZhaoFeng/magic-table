@@ -1,6 +1,6 @@
 <template>
   <ag-grid-vue
-    style="width: 500px; height: 500px"
+    style="width: 1000px; height: 600px"
     class="ag-theme-alpine"
     :columnDefs="columnDefs"
     :rowData="rowData"
@@ -10,31 +10,46 @@
 <script>
   import 'ag-grid-community/dist/styles/ag-grid.css'
   import 'ag-grid-community/dist/styles/ag-theme-alpine.css'
+  import { getPageData } from '@/api/table'
   import { AgGridVue } from 'ag-grid-vue3'
 
   export default {
     name: 'App',
-    data() {
-      return {
-        columnDefs: null,
-        rowData: null,
-      }
-    },
     components: {
       AgGridVue,
     },
-    beforeMount() {
-      this.columnDefs = [
-        { field: 'make', sortable: true, filter: true },
-        { field: 'model', sortable: true, filter: true },
-        { field: 'price', sortable: true, filter: true },
-      ]
-
-      this.rowData = [
-        { make: 'Toyota', model: 'Celica', price: 35000 },
-        { make: 'Ford', model: 'Mondeo', price: 32000 },
-        { make: 'Porsche', model: 'Boxter', price: 72000 },
-      ]
+    data() {
+      return {
+        columnDefs: [
+          { field: 'id', sortable: true, filter: true },
+          { field: 'plate', sortable: true, filter: true },
+          { field: 'driver', sortable: true, filter: true },
+          { field: 'phone', sortable: true, filter: true },
+          { field: 'fuel', sortable: true, filter: true },
+        ],
+        rowData: null,
+      }
+    },
+    mounted() {
+      this.fetch()
+    },
+    methods: {
+      handleTableChange(pagination) {
+        this.pagination.current = pagination.current
+        this.fetch()
+      },
+      fetch() {
+        this.loading = true
+        // 分页条件
+        let params = {
+          table: 'device',
+          pageSize: 10,
+          pageNum: 0,
+        }
+        getPageData(params, {}).then((res) => {
+          this.rowData = res.data.pageData
+        })
+      },
     },
   }
 </script>
