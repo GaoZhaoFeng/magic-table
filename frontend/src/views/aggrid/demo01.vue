@@ -1,11 +1,15 @@
 <template>
-  <ag-grid-vue
-    style="width: 1000px; height: 600px"
-    class="ag-theme-alpine"
-    :columnDefs="columnDefs"
-    :rowData="rowData"
-    rowSelection="multiple"
-  />
+  <div>
+    <a-button type="primary" @click="getSelectedRows()">获取选中的行</a-button>
+    <ag-grid-vue
+      style="width: 1000px; height: 600px"
+      class="ag-theme-alpine"
+      :columnDefs="columnDefs"
+      :rowData="rowData"
+      rowSelection="multiple"
+      @grid-ready="onGridReady"
+    />
+  </div>
 </template>
 
 <script>
@@ -46,6 +50,7 @@
             field: 'phone',
             sortable: true,
             filter: true,
+            checkboxSelection: true,
           },
           {
             headerName: '油耗',
@@ -61,10 +66,6 @@
       this.fetch()
     },
     methods: {
-      handleTableChange(pagination) {
-        this.pagination.current = pagination.current
-        this.fetch()
-      },
       fetch() {
         this.loading = true
         // 分页条件
@@ -76,6 +77,16 @@
         getPageData(params, {}).then((res) => {
           this.rowData = res.data.pageData
         })
+      },
+      getSelectedRows() {
+        const selectedNodes = this.gridApi.getSelectedNodes()
+        const selectedData = selectedNodes.map(node => node.data)
+        const selectedDataStringPresentation = selectedData.map(node => `${node.plate} ${node.driver}`).join(', ')
+        alert(`Selected nodes：${selectedDataStringPresentation}`)
+      },
+      onGridReady(params) {
+        this.gridApi = params.api
+        this.columnApi = params.columnApi
       },
     },
   }
