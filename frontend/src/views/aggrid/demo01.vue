@@ -26,38 +26,11 @@
     data() {
       return {
         columnDefs: [
-          {
-            headerName: 'ID',
-            field: 'id',
-            sortable: true,
-            filter: true,
-          },
-          {
-            headerName: '车牌号',
-            field: 'plate',
-            sortable: true,
-            filter: true,
-          },
-          {
-            headerName: '司机名',
-            field: 'driver',
-            sortable: true,
-            filter: true,
-            checkboxSelection: true,
-          },
-          {
-            headerName: '手机号',
-            field: 'phone',
-            sortable: true,
-            filter: true,
-            checkboxSelection: true,
-          },
-          {
-            headerName: '油耗',
-            field: 'fuel',
-            sortable: true,
-            filter: true,
-          },
+          { headerName: 'ID', field: 'id', sortable: true, filter: true },
+          { headerName: '车牌号', field: 'plate', sortable: true, filter: true },
+          { headerName: '司机名', field: 'driver', sortable: true, filter: true, checkboxSelection: true },
+          { headerName: '手机号', field: 'phone', sortable: true, filter: true, checkboxSelection: true },
+          { headerName: '油耗', field: 'fuel', sortable: true, filter: true },
         ],
         rowData: null,
       }
@@ -80,8 +53,8 @@
       },
       getSelectedRows() {
         const selectedNodes = this.gridApi.getSelectedNodes()
-        const selectedData = selectedNodes.map(node => node.data)
-        const selectedDataStringPresentation = selectedData.map(node => `${node.plate} ${node.driver}`).join(', ')
+        const selectedData = selectedNodes.map((node) => node.data)
+        const selectedDataStringPresentation = selectedData.map((node) => `${node.plate} ${node.driver}`).join(', ')
         alert(`Selected nodes：${selectedDataStringPresentation}`)
       },
       onGridReady(params) {
