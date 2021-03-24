@@ -20,6 +20,9 @@
         <a-button type="primary" title="导入更新" ghost>
           <vab-icon icon="file-download-line" />
         </a-button>
+        <a-button type="primary" title="刷新数据" @click="refresh()" ghost>
+          <vab-icon icon="refresh-line" />
+        </a-button>
       </a-button-group>
       <a-button-group title="危险操作">
         <a-button type="danger" title="清空表格" ghost>
@@ -34,14 +37,16 @@
       </a-button-group>
     </div>
     <ag-grid-vue
-      style="width: 100%; height: 80vh"
+      style="width: 100%; height: 75vh"
       class="ag-theme-alpine"
       :columnDefs="columnDefs"
       :rowData="rowData"
       rowSelection="multiple"
       :autoGroupColumnDef="autoGroupColumnDef"
       groupSelectsChildren="true"
-      @grid-ready="onGridReady"
+      @gridReady="onGridReady"
+      @gridSizeChanged="onGridSizeChanged"
+      id="table-data-detail"
     />
   </div>
 </template>
@@ -98,8 +103,8 @@
           },
         ],
         rowData: null,
-        gridApi: null,
-        columnApi: null,
+        gridApi: null, // 表格的API，https://www.ag-grid.com/vue-grid/grid-api/
+        columnApi: null, // 列的API，https://www.ag-grid.com/vue-grid/column-api/
         autoGroupColumnDef: {
           headerName: '司机名',
           field: 'driver',
@@ -135,6 +140,14 @@
       onGridReady(params) {
         this.gridApi = params.api
         this.columnApi = params.columnApi
+        this.gridApi.sizeColumnsToFit()
+      },
+      refresh() {
+        this.fetch()
+        this.gridApi.sizeColumnsToFit()
+      },
+      // 当页面伸缩的时候自动调整表格宽度
+      onGridSizeChanged() {
         this.gridApi.sizeColumnsToFit()
       },
     },
