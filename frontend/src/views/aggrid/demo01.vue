@@ -8,6 +8,7 @@
       :rowData="rowData"
       rowSelection="multiple"
       :autoGroupColumnDef="autoGroupColumnDef"
+      groupSelectsChildren="true"
       @grid-ready="onGridReady"
     />
   </div>
