@@ -34,7 +34,7 @@
       </a-button-group>
     </div>
     <ag-grid-vue
-      style="width: 1100px; height: 600px"
+      style="width: 100%; height: 80vh"
       class="ag-theme-alpine"
       :columnDefs="columnDefs"
       :rowData="rowData"
