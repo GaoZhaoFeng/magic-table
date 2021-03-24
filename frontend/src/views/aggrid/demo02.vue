@@ -45,7 +45,8 @@
       :autoGroupColumnDef="autoGroupColumnDef"
       groupSelectsChildren="true"
       @gridReady="onGridReady"
-      @gridSizeChanged="onGridSizeChanged"
+      @gridSizeChanged="fitTable"
+      @columnVisible="fitTable"
       id="table-data-detail"
     />
   </div>
@@ -140,14 +141,14 @@
       onGridReady(params) {
         this.gridApi = params.api
         this.columnApi = params.columnApi
-        this.gridApi.sizeColumnsToFit()
+        this.fitTable()
       },
       refresh() {
         this.fetch()
-        this.gridApi.sizeColumnsToFit()
+        this.fitTable()
       },
       // 当页面伸缩的时候自动调整表格宽度
-      onGridSizeChanged() {
+      fitTable() {
         this.gridApi.sizeColumnsToFit()
       },
     },
