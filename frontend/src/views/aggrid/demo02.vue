@@ -1,40 +1,79 @@
 <template>
-  <ag-grid-vue
-    style="width: 500px; height: 500px"
-    class="ag-theme-alpine"
-    :columnDefs="columnDefs"
-    :rowData="rowData"
-  />
+  <div>
+    <a-button type="primary" @click="getSelectedRows()">获取选中的行</a-button>
+    <ag-grid-vue
+      style="width: 1000px; height: 600px"
+      class="ag-theme-alpine"
+      :columnDefs="columnDefs"
+      :rowData="rowData"
+      rowSelection="multiple"
+      :autoGroupColumnDef="autoGroupColumnDef"
+      groupSelectsChildren="true"
+      @grid-ready="onGridReady"
+    />
+  </div>
 </template>
 
 <script>
   import 'ag-grid-community/dist/styles/ag-grid.css'
   import 'ag-grid-community/dist/styles/ag-theme-alpine.css'
+  import { getPageData } from '@/api/table'
   import { AgGridVue } from 'ag-grid-vue3'
 
   export default {
-    name: 'App',
-    data() {
-      return {
-        columnDefs: null,
-        rowData: null,
-      }
-    },
+    name: 'demo02',
     components: {
       AgGridVue,
     },
-    beforeMount() {
-      this.columnDefs = [
-        { field: 'make', sortable: true, filter: true },
-        { field: 'model', sortable: true, filter: true },
-        { field: 'price', sortable: true, filter: true },
-      ]
-
-      this.rowData = [
-        { make: 'Toyota', model: 'Celica', price: 35000 },
-        { make: 'Ford', model: 'Mondeo', price: 32000 },
-        { make: 'Porsche', model: 'Boxter', price: 72000 },
-      ]
+    data() {
+      return {
+        columnDefs: [
+          { headerName: 'ID', field: 'id', sortable: true, filter: true },
+          // rowGroup: true可以实现列分组
+          { headerName: '车牌号', field: 'plate', sortable: true, filter: true },
+          { headerName: '司机名', field: 'driver', sortable: true, filter: true, checkboxSelection: true },
+          { headerName: '手机号', field: 'phone', sortable: true, filter: true, checkboxSelection: true },
+          { headerName: '油耗', field: 'fuel', sortable: true, filter: true },
+        ],
+        rowData: null,
+        gridApi: null,
+        columnApi: null,
+        autoGroupColumnDef: {
+          headerName: '司机名',
+          field: 'driver',
+          cellRenderer: 'agGroupCellRenderer',
+          cellRendererParams: {
+            checkbox: true,
+          },
+        },
+      }
+    },
+    mounted() {
+      this.fetch()
+    },
+    methods: {
+      fetch() {
+        this.loading = true
+        // 分页条件
+        let params = {
+          table: 'device',
+          pageSize: 1000,
+          pageNum: 0,
+        }
+        getPageData(params, {}).then((res) => {
+          this.rowData = res.data.pageData
+        })
+      },
+      getSelectedRows() {
+        const selectedNodes = this.gridApi.getSelectedNodes()
+        const selectedData = selectedNodes.map((node) => node.data)
+        const selectedDataStringPresentation = selectedData.map((node) => `${node.plate} ${node.driver}`).join(', ')
+        alert(`Selected nodes：${selectedDataStringPresentation}`)
+      },
+      onGridReady(params) {
+        this.gridApi = params.api
+        this.columnApi = params.columnApi
+      },
     },
   }
 </script>
