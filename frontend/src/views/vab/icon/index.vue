@@ -3,22 +3,9 @@
     <a-alert message="点击图标即可复制代码" type="success" show-icon></a-alert>
     <a-row :gutter="20">
       <a-col :span="24">
-        <a-input-search
-          v-model:value="queryForm.title"
-          placeholder="图标名称"
-          enter-button
-          @search="queryData"
-        />
+        <a-input-search v-model:value="queryForm.title" placeholder="图标名称" enter-button @search="queryData" />
       </a-col>
-      <a-col
-        v-for="(item, index) in queryIcon"
-        :key="index"
-        :lg="2"
-        :md="3"
-        :sm="8"
-        :xl="2"
-        :xs="6"
-      >
+      <a-col v-for="(item, index) in queryIcon" :key="index" :lg="2" :md="3" :sm="8" :xl="2" :xs="6">
         <a-card shadow="hover" @click="handleCopyIcon(item.icon, $event)">
           <vab-icon :icon="item.icon"></vab-icon>
         </a-card>
@@ -55,7 +42,7 @@
         queryIcon: [],
         queryForm: {
           current: 1,
-          pageSize: 72,
+          pageSize: 3000,
           title: '',
         },
       }
@@ -93,7 +80,7 @@
         clip(item, event)
       },
       handleCopyIcon(item, event) {
-        clip(`<vab-remix-icon icon-class="${item}"></vab-remix-icon>`, event)
+        clip(`<vab-icon icon="${item}" />`, event)
       },
     },
   }

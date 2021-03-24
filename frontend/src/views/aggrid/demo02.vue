@@ -1,8 +1,40 @@
 <template>
-  <div>
-    <a-button type="primary" @click="getSelectedRows()">获取选中的行</a-button>
+  <div style="margin-top: -10px">
+    <div title="工具栏" style="margin-bottom: 8px">
+      <a-button-group title="表、字段、筛选条件的配置">
+        <a-button type="primary" title="表格配置" ghost>
+          <vab-icon icon="settings-2-line" />
+        </a-button>
+        <a-button type="primary" title="字段配置" ghost>
+          <vab-icon icon="list-settings-line" />
+        </a-button>
+        <a-button type="primary" title="自定义筛选条件" ghost>
+          <vab-icon icon="filter-line" />
+        </a-button>
+        <a-button type="primary" @click="getSelectedRows()" title="导出勾选数据" ghost>
+          <vab-icon icon="check-double-fill" />
+        </a-button>
+        <a-button type="primary" title="导出数据" ghost>
+          <vab-icon icon="share-forward-2-fill" />
+        </a-button>
+        <a-button type="primary" title="导入更新" ghost>
+          <vab-icon icon="file-download-line" />
+        </a-button>
+      </a-button-group>
+      <a-button-group title="危险操作">
+        <a-button type="danger" title="清空表格" ghost>
+          <vab-icon icon="delete-bin-line" />
+        </a-button>
+        <a-button type="danger" title="删除选中数据" ghost>
+          <vab-icon icon="delete-back-2-line" />
+        </a-button>
+        <a-button type="danger" title="删除筛选数据" ghost>
+          <vab-icon icon="filter-off-line" />
+        </a-button>
+      </a-button-group>
+    </div>
     <ag-grid-vue
-      style="width: 1000px; height: 600px"
+      style="width: 1100px; height: 600px"
       class="ag-theme-alpine"
       :columnDefs="columnDefs"
       :rowData="rowData"
@@ -19,11 +51,13 @@
   import 'ag-grid-community/dist/styles/ag-theme-alpine.css'
   import { getPageData } from '@/api/table'
   import { AgGridVue } from 'ag-grid-vue3'
+  import VabIcon from '@/layout/vab-icon'
 
   export default {
     name: 'demo02',
     components: {
       AgGridVue,
+      VabIcon,
     },
     data() {
       return {
@@ -57,7 +91,7 @@
         // 分页条件
         let params = {
           table: 'device',
-          pageSize: 1000,
+          pageSize: 100,
           pageNum: 0,
         }
         getPageData(params, {}).then((res) => {
