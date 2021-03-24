@@ -7,6 +7,7 @@
       :columnDefs="columnDefs"
       :rowData="rowData"
       rowSelection="multiple"
+      :autoGroupColumnDef="autoGroupColumnDef"
       @grid-ready="onGridReady"
     />
   </div>
