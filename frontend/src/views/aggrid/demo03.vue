@@ -41,6 +41,11 @@
       class="ag-theme-alpine"
       :columnDefs="columnDefs"
       :rowData="rowData"
+      :pagination="pagination"
+      :rowModelType="rowModelType"
+      :serverSideStoreType="serverSideStoreType"
+      :paginationPageSize="paginationPageSize"
+      :cacheBlockSize="cacheBlockSize"
       rowSelection="multiple"
       :autoGroupColumnDef="autoGroupColumnDef"
       groupSelectsChildren="true"
@@ -114,10 +119,12 @@
             checkbox: true,
           },
         },
+        pagination: true,
+        rowModelType: 'serverSide',
+        serverSideStoreType: 'partial',
+        paginationPageSize: 15,
+        cacheBlockSize: 15,
       }
-    },
-    mounted() {
-      this.fetch()
     },
     methods: {
       fetch() {
@@ -125,11 +132,13 @@
         // 分页条件
         let params = {
           table: 'device',
-          pageSize: 100,
-          pageNum: 0,
+          pageSize: this.paginationPageSize,
+          pageNum: this.gridApi.paginationGetCurrentPage() + 1, // 下标从0开始的
         }
         getPageData(params, {}).then((res) => {
-          this.rowData = res.data.pageData
+          // Todo：这里的分页还有非常多的问题，最好直接采用ag-grid的服务器端分页
+          this.gridApi.setServerSideDatasource(res.data.pageData)
+          this.fitTable()
         })
       },
       getSelectedRows() {
@@ -141,7 +150,7 @@
       onGridReady(params) {
         this.gridApi = params.api
         this.columnApi = params.columnApi
-        this.fitTable()
+        this.fetch()
       },
       refresh() {
         this.fetch()
