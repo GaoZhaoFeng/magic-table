@@ -56,7 +56,7 @@
         // 分页条件
         let params = {
           table: 'device',
-          pageSize: 10,
+          pageSize: 1000,
           pageNum: 0,
         }
         getPageData(params, {}).then((res) => {
