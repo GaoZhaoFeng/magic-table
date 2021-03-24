@@ -101,6 +101,15 @@ export const asyncRoutes = [
           icon: 'layout-grid-fill',
         },
       },
+      {
+        path: 'demo03',
+        name: 'Demo03',
+        component: () => import('@/views/aggrid/demo03'),
+        meta: {
+          title: 'demo03',
+          icon: 'layout-grid-fill',
+        },
+      },
     ],
   },
   {
