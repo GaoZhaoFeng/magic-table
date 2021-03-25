@@ -48,6 +48,14 @@ SQLcl
 ## oracle12c的安装教程
 > https://blog.csdn.net/weixin_34175509/article/details/92385700
 
+然后执行如下命令即可：
+
+```shell
+docker run -d -p 8080:8080 -p 1521:1521 sath89/oracle-12c
+```
+
+需要较长的时间才能初始化好~耐心等待10~20分钟
+
 ## 中间执行异常地的sql语句
 > ORA-00933: SQL command not properly ended 
 ```sql
