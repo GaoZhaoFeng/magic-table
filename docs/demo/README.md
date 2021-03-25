@@ -22,7 +22,7 @@ mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc7 -Dversion=12.1
 ```
 
 ## Docker安装oracle11
-> 镜像：https://hub.docker.com/r/rohitbasu77/oracle11g
+> 镜像：https://hub.docker.com/r/rohitbasu77/oracle11g 参考教程：https://www.jianshu.com/p/5cc2a9cf292f
 
 ```yml
 docker run -d --name oracle11g  -p 1521:1521 -p 8080:8080 rohitbasu77/oracle11g:latest
@@ -41,3 +41,25 @@ password: oracle
 ```
 SQLcl
 连接oracle的方式有很多，据说官方的SQL developer做的也挺好的，这里我们使用官方的一款命令行 SQLcl
+
+
+下面按照：https://www.ag-grid.com/vue-grid/server-side-operations-oracle/ 来即可
+
+## oracle12c的安装教程
+> https://blog.csdn.net/weixin_34175509/article/details/92385700
+
+## 中间执行异常地的sql语句
+> ORA-00933: SQL command not properly ended 
+```sql
+SELECT PRODUCT,
+       sum(CURRENTVALUE)  as CURRENTVALUE,
+       sum(PREVIOUSVALUE) as PREVIOUSVALUE,
+       sum(PL1)           as PL1,
+       sum(PL2)           as PL2,
+       sum(GAINDX)        as GAINDX,
+       sum(SXPX)          as SXPX,
+       sum(X99OUT)        as X99OUT
+FROM trade
+GROUP BY PRODUCT
+OFFSET 0 ROWS FETCH NEXT 101 ROWS ONLY;
+```
