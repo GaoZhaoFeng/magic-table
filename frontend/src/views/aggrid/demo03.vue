@@ -48,7 +48,6 @@
       :cacheBlockSize="cacheBlockSize"
       rowSelection="multiple"
       :autoGroupColumnDef="autoGroupColumnDef"
-      groupSelectsChildren="true"
       @gridReady="onGridReady"
       @gridSizeChanged="fitTable"
       @columnVisible="fitTable"
