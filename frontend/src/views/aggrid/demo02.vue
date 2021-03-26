@@ -80,7 +80,7 @@
             field: 'plate',
             sortable: true,
             filter: true,
-            // rowGroup: true可以实现列分组
+            rowGroup: true, // 可以实现列分组
           },
           {
             headerName: '司机名',
@@ -135,7 +135,9 @@
       getSelectedRows() {
         const selectedNodes = this.gridApi.getSelectedNodes()
         const selectedData = selectedNodes.map((node) => node.data)
-        const selectedDataStringPresentation = selectedData.map((node) => `${node.plate} ${node.driver}`).join(', ')
+        const selectedDataStringPresentation = selectedData
+          .map((node) => `${node.plate} ${node.driver}`)
+          .join(', ')
         alert(`Selected nodes：${selectedDataStringPresentation}`)
       },
       onGridReady(params) {
