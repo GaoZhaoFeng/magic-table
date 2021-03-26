@@ -42,8 +42,6 @@
       :columnDefs="columnDefs"
       :rowData="rowData"
       rowSelection="multiple"
-      :autoGroupColumnDef="autoGroupColumnDef"
-      groupSelectsChildren="true"
       @gridReady="onGridReady"
       @gridSizeChanged="fitTable"
       @columnVisible="fitTable"
@@ -80,21 +78,18 @@
             field: 'plate',
             sortable: true,
             filter: true,
-            rowGroup: true, // 可以实现列分组
           },
           {
             headerName: '司机名',
             field: 'driver',
             sortable: true,
             filter: true,
-            checkboxSelection: true,
           },
           {
             headerName: '手机号',
             field: 'phone',
             sortable: true,
             filter: true,
-            checkboxSelection: true,
           },
           {
             headerName: '油耗',
@@ -106,14 +101,6 @@
         rowData: null,
         gridApi: null, // 表格的API，https://www.ag-grid.com/vue-grid/grid-api/
         columnApi: null, // 列的API，https://www.ag-grid.com/vue-grid/column-api/
-        autoGroupColumnDef: {
-          headerName: '司机名',
-          field: 'driver',
-          cellRenderer: 'agGroupCellRenderer',
-          cellRendererParams: {
-            checkbox: true,
-          },
-        },
       }
     },
     mounted() {
