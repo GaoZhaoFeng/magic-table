@@ -37,7 +37,7 @@
       </a-button-group>
     </div>
     <ag-grid-vue
-      style="width: 100%; height: 75vh"
+      style="width: 100%; height: 72vh"
       class="ag-theme-alpine"
       :columnDefs="columnDefs"
       :rowData="rowData"
@@ -46,6 +46,17 @@
       @gridSizeChanged="fitTable"
       @columnVisible="fitTable"
       id="table-data-detail"
+    />
+    <a-pagination
+      :current="current"
+      :page-size-options="pageSizeOptions"
+      :total="total"
+      show-size-changer
+      show-quick-jumper
+      :page-size="pageSize"
+      @showSizeChange="onShowSizeChange"
+      @change="onChange"
+      style="float: right; width: 700px"
     />
   </div>
 </template>
@@ -101,6 +112,10 @@
         rowData: null,
         gridApi: null, // 表格的API，https://www.ag-grid.com/vue-grid/grid-api/
         columnApi: null, // 列的API，https://www.ag-grid.com/vue-grid/column-api/
+        pageSizeOptions: [10, 15, 20, 30, 40, 50],
+        current: 1,
+        pageSize: 15,
+        total: 0,
       }
     },
     mounted() {
@@ -112,11 +127,13 @@
         // 分页条件
         let params = {
           table: 'device',
-          pageSize: 100,
-          pageNum: 0,
+          pageSize: this.pageSize,
+          pageNum: this.current,
         }
         getPageData(params, {}).then((res) => {
           this.rowData = res.data.pageData
+          this.total = res.data.totalCnt
+          this.fitTable()
         })
       },
       getSelectedRows() {
@@ -139,6 +156,17 @@
       // 当页面伸缩的时候自动调整表格宽度
       fitTable() {
         this.gridApi.sizeColumnsToFit()
+      },
+      onShowSizeChange(current, pageSize) {
+        this.pageSize = pageSize
+        // 默认回到第一页
+        this.current = 1
+        // 重新刷新数据
+        this.fetch()
+      },
+      onChange(pageNumber) {
+        this.current = pageNumber
+        this.fetch()
       },
     },
   }
