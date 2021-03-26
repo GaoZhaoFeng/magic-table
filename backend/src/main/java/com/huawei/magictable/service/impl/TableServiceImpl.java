@@ -32,8 +32,16 @@ public class TableServiceImpl implements TableService {
         JSONObject result = new JSONObject();
         List<JSONObject> docs = new ArrayList<>();
         // json必须转换为bson才能进行查询
-        Bson filterBson = Document.parse(filter.getJSONObject("filter").toString());
-        Bson sorterBson = Document.parse(filter.getJSONObject("sorter").toString());
+        JSONObject filterJsonObject = filter.getJSONObject("filter");
+        if (filterJsonObject == null) {
+            filterJsonObject = new JSONObject();
+        }
+        JSONObject sorterJsonObject = filter.getJSONObject("sorter");
+        if (sorterJsonObject == null) {
+            sorterJsonObject = new JSONObject();
+        }
+        Bson filterBson = Document.parse(filterJsonObject.toString());
+        Bson sorterBson = Document.parse(sorterJsonObject.toString());
         MongoCollection<Document> collection = mongoTemplate.getCollection(table);
         // 1.查询符合筛选条件的文档数目
         long cnt = collection.countDocuments(filterBson);
