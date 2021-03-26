@@ -13,7 +13,6 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
@@ -33,13 +32,20 @@ public class TableServiceImpl implements TableService {
         JSONObject result = new JSONObject();
         List<JSONObject> docs = new ArrayList<>();
         // json必须转换为bson才能进行查询
-        Bson filterBson = Document.parse(filter.toString());
+        Bson filterBson = Document.parse(filter.getJSONObject("filter").toString());
+        Bson sorterBson = Document.parse(filter.getJSONObject("sorter").toString());
         MongoCollection<Document> collection = mongoTemplate.getCollection(table);
         // 1.查询符合筛选条件的文档数目
         long cnt = collection.countDocuments(filterBson);
         // 2.查询符合条件的指定页的文档
         // 注意这里的find是可以传入各种查询条件的，查所有数据前端传入个{}就行，查询指定条件传例如
-        FindIterable<Document> documents = collection.find(filterBson).skip((pageNum - 1) * pageSize).limit(pageSize);
+        FindIterable<Document> documents = collection
+                /* 过滤 */
+                .find(filterBson)
+                /* 排序 */
+                .sort(sorterBson)
+                /* 结果分页 */
+                .skip((pageNum - 1) * pageSize).limit(pageSize);
         for (Document document : documents) {
             document.append("id", document.getObjectId("_id").toString());
             docs.add((JSONObject) JSON.parse(document.toJson()));

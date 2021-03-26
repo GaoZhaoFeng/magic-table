@@ -37,5 +37,5 @@ public interface TableService {
      * }
      * @return 符合条件的记录数
      */
-    JSONObject getPageData(String table, int pageNum, int pageSize, JSONObject filter);
+    JSONObject getPageData(String table, int pageNum, int pageSize, JSONObject body);
 }

@@ -25,8 +25,8 @@ public class TableController {
     @PostMapping("/page_data")
     @ApiOperation("获取用户信息")
     ResultVO<JSONObject> getPageData(@RequestParam String table, @RequestParam int pageNum,
-                                     @RequestParam int pageSize, @RequestBody JSONObject filter) {
-        JSONObject pageData = tableService.getPageData(table, pageNum, pageSize, filter);
+                                     @RequestParam int pageSize, @RequestBody JSONObject body) {
+        JSONObject pageData = tableService.getPageData(table, pageNum, pageSize, body);
         ResultEnum getPageDataSuccess = ResultEnum.GET_PAGE_DATA_SUCCESS;
         return new ResultVO<>(getPageDataSuccess.getCode(), getPageDataSuccess.getMessage(), pageData);
     }
