@@ -42,7 +42,7 @@
         queryIcon: [],
         queryForm: {
           current: 1,
-          pageSize: 3000,
+          pageSize: 72,
           title: '',
         },
       }
