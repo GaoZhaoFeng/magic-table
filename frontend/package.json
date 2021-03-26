@@ -12,7 +12,6 @@
     "update": "ncu -u --target greatest&&npm install --registry=https://registry.npm.taobao.org"
   },
   "dependencies": {
-    "ag-grid-enterprise": "^25.1.0",
     "ag-grid-community": "^25.1.0",
     "ag-grid-vue3": "^25.1.0",
     "vue-class-component": "8.0.0-rc.1",
