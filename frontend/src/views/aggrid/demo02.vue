@@ -43,9 +43,11 @@
       :columnDefs="columnDefs"
       :rowData="rowData"
       :animateRows="true"
+      :accentedSort="true"
       rowSelection="multiple"
       @gridReady="onGridReady"
       @gridSizeChanged="fitTable"
+      @sortChanged="onSortChanged"
       @columnVisible="fitTable"
       id="table-data-detail"
     />
@@ -58,7 +60,7 @@
       :page-size="pageSize"
       @showSizeChange="onShowSizeChange"
       @change="onChange"
-      style="float: right; width: 700px"
+      style="float: right; width: 100%"
     />
   </div>
 </template>
@@ -78,6 +80,7 @@
     },
     data() {
       return {
+        tableName: 'device',
         columnDefs: [
           {
             headerName: 'ID',
@@ -108,25 +111,46 @@
         rowData: null,
         gridApi: null, // 表格的API，https://www.ag-grid.com/vue-grid/grid-api/
         columnApi: null, // 列的API，https://www.ag-grid.com/vue-grid/column-api/
-        pageSizeOptions: [10, 15, 20, 30, 40, 50],
+        pageSizeOptions: ['10', '15', '20', '30', '40', '50'],
         current: 1,
         pageSize: 15,
         total: 0,
       }
     },
     mounted() {
-      this.fetch()
+      this.loading = true
+      // 分页条件
+      this.getData(this.tableName, {}, {})
     },
     methods: {
-      fetch() {
-        this.loading = true
+      getSorter() {
+        let colState = this.columnApi.getColumnState()
+        let sortStates = colState
+          .filter(function (s) {
+            return s.sort != null
+          })
+          .map(function (s) {
+            return {
+              colId: s.colId,
+              sort: s.sort,
+              sortIndex: s.sortIndex,
+            }
+          })
+        console.log('saved sort', sortStates)
+        let sorter = {}
+        for (let i = 0; i < sortStates.length; i++) {
+          sorter[sortStates[i].colId] = sortStates[i].sort === 'asc' ? 1 : -1
+        }
+        return sorter
+      },
+      getData(table, filter, sorter) {
         // 分页条件
         let params = {
-          table: 'device',
+          table: table,
           pageSize: this.pageSize,
           pageNum: this.current,
         }
-        getPageData(params, {}).then((res) => {
+        getPageData(params, { filter: filter, sorter: sorter }).then((res) => {
           this.rowData = res.data.pageData
           this.total = res.data.totalCnt
           this.fitTable()
@@ -146,7 +170,7 @@
         this.fitTable()
       },
       refresh() {
-        this.fetch()
+        this.getData(this.tableName, {}, this.getSorter())
         this.fitTable()
       },
       // 当页面伸缩的时候自动调整表格宽度
@@ -158,11 +182,14 @@
         // 默认回到第一页
         this.current = 1
         // 重新刷新数据
-        this.fetch()
+        this.getData(this.tableName, {}, this.getSorter())
       },
       onChange(pageNumber) {
         this.current = pageNumber
-        this.fetch()
+        this.getData(this.tableName, {}, this.getSorter())
+      },
+      onSortChanged() {
+        this.getData(this.tableName, {}, this.getSorter())
       },
     },
   }
