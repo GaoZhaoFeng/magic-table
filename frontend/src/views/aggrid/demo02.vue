@@ -31,7 +31,7 @@
         <a-button type="danger" title="删除选中数据" ghost>
           <vab-icon icon="delete-back-2-line" />
         </a-button>
-        <a-button type="danger" title="删除筛选数据" ghost>
+        <a-button type="danger" title="删除筛选条件" ghost>
           <vab-icon icon="filter-off-line" />
         </a-button>
       </a-button-group>
@@ -39,8 +39,10 @@
     <ag-grid-vue
       style="width: 100%; height: 72vh"
       class="ag-theme-alpine"
+      :defaultColDef="defaultColDef"
       :columnDefs="columnDefs"
       :rowData="rowData"
+      :animateRows="true"
       rowSelection="multiple"
       @gridReady="onGridReady"
       @gridSizeChanged="fitTable"
@@ -80,35 +82,29 @@
           {
             headerName: 'ID',
             field: 'id',
-            sortable: true,
-            filter: true,
             width: 250,
           },
           {
             headerName: '车牌号',
             field: 'plate',
-            sortable: true,
-            filter: true,
           },
           {
             headerName: '司机名',
             field: 'driver',
-            sortable: true,
-            filter: true,
           },
           {
             headerName: '手机号',
             field: 'phone',
-            sortable: true,
-            filter: true,
           },
           {
             headerName: '油耗',
             field: 'fuel',
-            sortable: true,
-            filter: true,
           },
         ],
+        defaultColDef: {
+          sortable: true,
+          filter: true,
+        },
         rowData: null,
         gridApi: null, // 表格的API，https://www.ag-grid.com/vue-grid/grid-api/
         columnApi: null, // 列的API，https://www.ag-grid.com/vue-grid/column-api/
