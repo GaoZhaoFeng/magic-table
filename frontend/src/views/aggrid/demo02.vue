@@ -47,7 +47,8 @@
       rowSelection="multiple"
       @gridReady="onGridReady"
       @gridSizeChanged="fitTable"
-      @sortChanged="onSortChanged"
+      @sortChanged="onSorterChanged"
+      @filterChanged="onFilterChanged"
       @columnVisible="fitTable"
       id="table-data-detail"
     />
@@ -102,11 +103,20 @@
           {
             headerName: '油耗',
             field: 'fuel',
+            filter: 'agNumberColumnFilter',
+          },
+          {
+            headerName: '出厂日期',
+            field: 'date',
+            filter: 'agDateColumnFilter',
           },
         ],
         defaultColDef: {
           sortable: true,
           filter: true,
+          filterParams: {
+            buttons: ['reset', 'apply'],
+          },
         },
         rowData: null,
         gridApi: null, // 表格的API，https://www.ag-grid.com/vue-grid/grid-api/
@@ -188,8 +198,12 @@
         this.current = pageNumber
         this.getData(this.tableName, {}, this.getSorter())
       },
-      onSortChanged() {
+      onSorterChanged() {
         this.getData(this.tableName, {}, this.getSorter())
+      },
+      onFilterChanged() {
+        const model = this.gridApi.getFilterModel()
+        console.log(model)
       },
     },
   }
