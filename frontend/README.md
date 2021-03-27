@@ -69,11 +69,11 @@
 
 ## ag-grid使用技巧
 + 多行排序：shift+点击多个标题栏可以实现多条件排序
-+ 自定义过滤器，https://www.ag-grid.com/vue-grid/component-filter/
++ 自定义过滤器：https://www.ag-grid.com/vue-grid/component-filter/
 + 自定义单元格编辑器：https://www.ag-grid.com/vue-grid/component-cell-editor/
 
 ## 典型的filter
-> ag-grid典型的过滤器，支持多条件。还没对接后端
+> ag-grid典型的过滤器，支持多条件。还没对接后端。
 ```json
 {
     "fuel": {
