@@ -68,5 +68,6 @@
 ```
 
 ## ag-grid使用技巧
-+ shift+点击多个标题栏可以实现多条件排序
-+ ag-grid：自定义过滤器，https://www.ag-grid.com/vue-grid/component-filter/
++ 多行排序：shift+点击多个标题栏可以实现多条件排序
++ 自定义过滤器，https://www.ag-grid.com/vue-grid/component-filter/
++ 自定义单元格编辑器：https://www.ag-grid.com/vue-grid/component-cell-editor/
