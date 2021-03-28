@@ -167,7 +167,7 @@
           console.log(model[field])
         }
         // 将filter存到localStorage
-        localStorage.setItem(this.filterName, JSON.stringify(filter))
+        localStorage.setItem(this.filterName, filter)
       },
       fetchInit() {
         this.loading = true
