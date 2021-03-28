@@ -127,9 +127,6 @@
         total: 0,
       }
     },
-    mounted() {
-      this.fetchInit()
-    },
     computed: {
       filterName: function () {
         return 'table_filter_' + this.tableName
@@ -157,7 +154,7 @@
           sorter[sortStates[i].colId] = sortStates[i].sort === 'asc' ? 1 : -1
         }
         // 将sorter存到localStorage
-        localStorage.setItem(this.sorterName, sorter)
+        localStorage.setItem(this.sorterName, JSON.stringify(sorter))
         return sorter
       },
       getFilter() {
@@ -170,26 +167,20 @@
           console.log(model[field])
         }
         // 将filter存到localStorage
-        localStorage.setItem(this.filterName, filter)
+        localStorage.setItem(this.filterName, JSON.stringify(filter))
       },
       fetchInit() {
         this.loading = true
         // 如果之前存了filter和sorter，要先加载过来
-        let filter = localStorage.getItem(this.sorterName)
-        let sorter = localStorage.getItem(this.filterName)
-        if (filter === null || filter === undefined) {
-          filter = {}
-        } else {
-          this.gridApi.setFilterModel(filter)
-        }
-        if (sorter === null || sorter === undefined) {
-          sorter = {}
-        } else {
-          this.columnApi.applyColumnState({
-            state: sorter,
-            defaultState: { sort: null },
-          })
-        }
+        let filter = localStorage.getItem(this.filterName)
+        console.log(filter)
+        let sorter = localStorage.getItem(this.sorterName)
+        console.log(sorter)
+        this.gridApi.setFilterModel(filter)
+        this.columnApi.applyColumnState({
+          state: sorter,
+          defaultState: { sort: null },
+        })
         // Todo：后面filter和sorter可能都会从后端数据库获取，直接应用到表格上。
         //  但是不在ag-grid的filter和sorter上体现。直接数据取好就行了。
         // 前端有sorter和filter就用前端的，否则就用后端的 or 后端预先加载到前端也可以
@@ -219,10 +210,11 @@
           .join(', ')
         alert(`Selected nodes：${selectedDataStringPresentation}`)
       },
+      // 表格加载号会自动调用，可以当mounted来用
       onGridReady(params) {
         this.gridApi = params.api
         this.columnApi = params.columnApi
-        this.fitTable()
+        this.fetchInit()
       },
       // 当页面伸缩的时候自动调整表格宽度
       fitTable() {
