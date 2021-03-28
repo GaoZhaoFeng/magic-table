@@ -20,7 +20,7 @@
         <a-button type="primary" title="导入更新" ghost>
           <vab-icon icon="file-download-line" />
         </a-button>
-        <a-button type="primary" title="刷新数据" @click="refresh()" ghost>
+        <a-button type="primary" title="刷新数据" @click="fetch()" ghost>
           <vab-icon icon="refresh-line" />
         </a-button>
       </a-button-group>
@@ -128,9 +128,7 @@
       }
     },
     mounted() {
-      this.loading = true
-      // 分页条件
-      this.getData(this.tableName, {}, {})
+      this.fetchInit()
     },
     methods: {
       getSorter() {
@@ -146,12 +144,33 @@
               sortIndex: s.sortIndex,
             }
           })
-        console.log('saved sort', sortStates)
         let sorter = {}
         for (let i = 0; i < sortStates.length; i++) {
           sorter[sortStates[i].colId] = sortStates[i].sort === 'asc' ? 1 : -1
         }
+        // 将sorter存到localStorage
+        localStorage.setItem('table_sorter_' + this.tableName, sorter)
         return sorter
+      },
+      getFilter() {
+        const model = this.gridApi.getFilterModel()
+        console.log(model)
+        // Todo：下面解析model生成filter
+        let filter = {}
+        for (let i = 0; i < this.columnDefs; i++) {
+          let field = this.columnDefs[i].field
+          console.log(model[field])
+        }
+        // Todo：将filter存到localStorage
+        localStorage.setItem('table_' + this.tableName + '_filter', filter)
+      },
+      fetchInit() {
+        this.loading = true
+        // Todo：后面filter和sorter可能都会从后端数据库获取，直接应用到表格上
+        this.getData(this.tableName, {}, {})
+      },
+      fetch() {
+        this.getData(this.tableName, {}, this.getSorter())
       },
       getData(table, filter, sorter) {
         // 分页条件
@@ -179,10 +198,6 @@
         this.columnApi = params.columnApi
         this.fitTable()
       },
-      refresh() {
-        this.getData(this.tableName, {}, this.getSorter())
-        this.fitTable()
-      },
       // 当页面伸缩的时候自动调整表格宽度
       fitTable() {
         this.gridApi.sizeColumnsToFit()
@@ -192,18 +207,17 @@
         // 默认回到第一页
         this.current = 1
         // 重新刷新数据
-        this.getData(this.tableName, {}, this.getSorter())
+        this.fetch()
       },
       onChange(pageNumber) {
         this.current = pageNumber
-        this.getData(this.tableName, {}, this.getSorter())
+        this.fetch()
       },
       onSorterChanged() {
-        this.getData(this.tableName, {}, this.getSorter())
+        this.fetch()
       },
       onFilterChanged() {
-        const model = this.gridApi.getFilterModel()
-        console.log(model)
+        this.getData(this.tableName, this.getFilter(), this.getSorter())
       },
     },
   }
