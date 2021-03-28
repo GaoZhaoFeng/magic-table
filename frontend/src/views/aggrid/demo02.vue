@@ -130,6 +130,14 @@
     mounted() {
       this.fetchInit()
     },
+    computed: {
+      filterName: function () {
+        return 'table_filter_' + this.tableName
+      },
+      sorterName: function () {
+        return 'table_sorter_' + this.tableName
+      },
+    },
     methods: {
       getSorter() {
         let colState = this.columnApi.getColumnState()
@@ -149,25 +157,41 @@
           sorter[sortStates[i].colId] = sortStates[i].sort === 'asc' ? 1 : -1
         }
         // 将sorter存到localStorage
-        localStorage.setItem('table_sorter_' + this.tableName, sorter)
+        localStorage.setItem(this.sorterName, sorter)
         return sorter
       },
       getFilter() {
         const model = this.gridApi.getFilterModel()
         console.log(model)
-        // Todo：下面解析model生成filter
+        // 下面解析model生成filter
         let filter = {}
         for (let i = 0; i < this.columnDefs; i++) {
           let field = this.columnDefs[i].field
           console.log(model[field])
         }
-        // Todo：将filter存到localStorage
-        localStorage.setItem('table_' + this.tableName + '_filter', filter)
+        // 将filter存到localStorage
+        localStorage.setItem(this.filterName, filter)
       },
       fetchInit() {
         this.loading = true
+        // 如果之前存了filter和sorter，要先加载过来
+        let filter = localStorage.getItem(this.sorterName)
+        let sorter = localStorage.getItem(this.filterName)
+        if (filter === null || filter === undefined) {
+          filter = {}
+        } else {
+          this.gridApi.setFilterModel(filter)
+        }
+        if (sorter === null || sorter === undefined) {
+          sorter = {}
+        } else {
+          this.columnApi.applyColumnState({
+            state: sorter,
+            defaultState: { sort: null },
+          })
+        }
         // Todo：后面filter和sorter可能都会从后端数据库获取，直接应用到表格上
-        this.getData(this.tableName, {}, {})
+        this.getData(this.tableName, filter, sorter)
       },
       fetch() {
         this.getData(this.tableName, {}, this.getSorter())
