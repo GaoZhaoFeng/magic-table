@@ -3,9 +3,22 @@
     <a-alert message="点击图标即可复制代码" type="success" show-icon></a-alert>
     <a-row :gutter="20">
       <a-col :span="24">
-        <a-input-search v-model:value="queryForm.title" placeholder="图标名称" enter-button @search="queryData" />
+        <a-input-search
+          v-model:value="queryForm.title"
+          placeholder="图标名称"
+          enter-button
+          @search="queryData"
+        />
       </a-col>
-      <a-col v-for="(item, index) in queryIcon" :key="index" :lg="2" :md="3" :sm="8" :xl="2" :xs="6">
+      <a-col
+        v-for="(item, index) in queryIcon"
+        :key="index"
+        :lg="2"
+        :md="3"
+        :sm="8"
+        :xl="2"
+        :xs="6"
+      >
         <a-card shadow="hover" @click="handleCopyIcon(item.icon, $event)">
           <vab-icon :icon="item.icon"></vab-icon>
         </a-card>
@@ -71,7 +84,9 @@
           pageNum: this.queryForm.current,
         }
         const { data } = await getPageData(params, {
-          icon: { $regex: this.queryForm.title },
+          filter: {
+            icon: { $regex: this.queryForm.title },
+          },
         })
         this.queryIcon = data.pageData
         this.total = data.totalCnt

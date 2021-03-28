@@ -110,7 +110,7 @@ export const asyncRoutes = [
     alwaysShow: true,
     meta: {
       title: 'VXE学习',
-      icon: 'grid-fill',
+      icon: 'table-2',
     },
     children: [
       {
