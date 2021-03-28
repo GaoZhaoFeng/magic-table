@@ -190,7 +190,9 @@
             defaultState: { sort: null },
           })
         }
-        // Todo：后面filter和sorter可能都会从后端数据库获取，直接应用到表格上
+        // Todo：后面filter和sorter可能都会从后端数据库获取，直接应用到表格上。
+        //  但是不在ag-grid的filter和sorter上体现。直接数据取好就行了。
+        // 前端有sorter和filter就用前端的，否则就用后端的 or 后端预先加载到前端也可以
         this.getData(this.tableName, filter, sorter)
       },
       fetch() {
