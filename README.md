@@ -20,3 +20,6 @@
 
 ## 前端备选方案5
 > https://gitee.com/xuliangzhan_admin/vxe-table-demo
+
+## 前端备选方案6
+> 个人认为最好的方案：https://github.com/lqsong/admin-antd-vue
