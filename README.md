@@ -22,4 +22,8 @@
 > https://gitee.com/xuliangzhan_admin/vxe-table-demo
 
 ## 前端备选方案6
-> 个人认为最好的方案：https://github.com/lqsong/admin-antd-vue
+> 个人认为最好的方案(用Vite的)：
++ github地址：https://github.com/lqsong/admin-antd-vue
++ gitee地址：https://gitee.com/lqsong/admin-antd-vue
++ 文档：http://admin-antd-vue.liqingsong.cc/
+
