@@ -17,3 +17,6 @@
 
 ## 前端备选方案4
 > https://github.com/lirongtong/miitvip-vue-admin-manager
+
+## 前端备选方案5
+> https://gitee.com/xuliangzhan_admin/vxe-table-demo
