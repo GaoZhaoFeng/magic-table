@@ -27,3 +27,9 @@
 + gitee地址：https://gitee.com/lqsong/admin-antd-vue
 + 文档：http://admin-antd-vue.liqingsong.cc/
 
+## 备选方案7
+> 更完整，好像更好点
+
++ 后端：[api-server](https://gitee.com/code-together/api-server)
++ 前端：[api-server-client](https://gitee.com/code-together/api-server-client)
+
