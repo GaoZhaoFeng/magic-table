@@ -103,3 +103,6 @@
     }
 }
 ```
+## vxe-table的相关资料
++ 代码库：https://gitee.com/xuliangzhan_admin/vxe-table
++ 文档：https://xuliangzhan_admin.gitee.io/vxe-table/v4/table/base/basic
