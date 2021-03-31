@@ -11,7 +11,12 @@
         <a-button type="primary" title="自定义筛选条件" ghost>
           <vab-icon icon="filter-line" />
         </a-button>
-        <a-button type="primary" @click="getSelectedRows()" title="导出勾选数据" ghost>
+        <a-button
+          type="primary"
+          @click="getSelectedRows()"
+          title="导出勾选数据"
+          ghost
+        >
           <vab-icon icon="check-double-fill" />
         </a-button>
         <a-button type="primary" title="导出数据" ghost>
