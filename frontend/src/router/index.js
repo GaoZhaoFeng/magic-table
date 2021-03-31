@@ -106,7 +106,7 @@ export const asyncRoutes = [
   {
     path: '/vxe',
     component: Layout,
-    redirect: '/vxe/demo01',
+    redirect: '/vxe/demo001',
     alwaysShow: true,
     meta: {
       title: 'VXE学习',
@@ -114,20 +114,20 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: 'demo01',
-        name: 'Demo01',
+        path: 'demo001',
+        name: 'Demo001',
         component: () => import('@/views/vxe/demo01'),
         meta: {
-          title: 'demo01',
+          title: 'demo001',
           icon: 'layout-grid-fill',
         },
       },
       {
-        path: 'demo02',
-        name: 'Demo02',
+        path: 'demo002',
+        name: 'Demo002',
         component: () => import('@/views/vxe/demo02'),
         meta: {
-          title: 'demo02',
+          title: 'demo002',
           icon: 'layout-grid-fill',
         },
       },
