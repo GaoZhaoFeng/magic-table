@@ -2,12 +2,33 @@
   <div style="margin-top: -20px">
     <vxe-toolbar custom print ref="deviceToolbar">
       <template #buttons>
-        <vxe-button content="刷新" @click="this.getData('device')"></vxe-button>
+        <vxe-button content="刷新" @click="this.getData('device')" />
         <vxe-button content="对齐">
           <template #dropdowns>
             <vxe-button @click="allAlign = 'left'">居左</vxe-button>
             <vxe-button @click="allAlign = 'center'">居中</vxe-button>
             <vxe-button @click="allAlign = 'right'">居右</vxe-button>
+          </template>
+        </vxe-button>
+        <vxe-button content="导出数据">
+          <template #dropdowns>
+            <vxe-button>全部数据</vxe-button>
+            <vxe-button>勾选数据</vxe-button>
+            <vxe-button>本页数据</vxe-button>
+          </template>
+        </vxe-button>
+        <vxe-button content="表格配置">
+          <template #dropdowns>
+            <vxe-button>表配置</vxe-button>
+            <vxe-button>列配置</vxe-button>
+            <vxe-button>筛选配置</vxe-button>
+          </template>
+        </vxe-button>
+        <vxe-button content="数据操作">
+          <template #dropdowns>
+            <vxe-button>删除勾选</vxe-button>
+            <vxe-button>复制勾选</vxe-button>
+            <vxe-button>清空表格</vxe-button>
           </template>
         </vxe-button>
       </template>
