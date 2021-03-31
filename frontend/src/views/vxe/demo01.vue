@@ -1,17 +1,19 @@
 <template>
-  <vxe-toolbar>
-    <template #buttons>
-      <vxe-button @click="allAlign = 'left'">居左</vxe-button>
-      <vxe-button @click="allAlign = 'center'">居中</vxe-button>
-      <vxe-button @click="allAlign = 'right'">居右</vxe-button>
-    </template>
-  </vxe-toolbar>
-  <vxe-table :align="allAlign" :data="tableData1">
-    <vxe-table-column type="seq" width="60"></vxe-table-column>
-    <vxe-table-column field="name" title="Name"></vxe-table-column>
-    <vxe-table-column field="sex" title="Sex"></vxe-table-column>
-    <vxe-table-column field="age" title="Age"></vxe-table-column>
-  </vxe-table>
+  <div>
+    <vxe-toolbar>
+      <template #buttons>
+        <vxe-button @click="allAlign = 'left'">居左</vxe-button>
+        <vxe-button @click="allAlign = 'center'">居中</vxe-button>
+        <vxe-button @click="allAlign = 'right'">居右</vxe-button>
+      </template>
+    </vxe-toolbar>
+    <vxe-table :align="allAlign" :data="tableData1">
+      <vxe-table-column type="seq" width="60"></vxe-table-column>
+      <vxe-table-column field="name" title="Name"></vxe-table-column>
+      <vxe-table-column field="sex" title="Sex"></vxe-table-column>
+      <vxe-table-column field="age" title="Age"></vxe-table-column>
+    </vxe-table>
+  </div>
 </template>
 
 <script>
