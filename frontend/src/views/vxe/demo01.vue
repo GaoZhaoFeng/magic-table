@@ -1,10 +1,15 @@
 <template>
-  <div>
-    <vxe-toolbar>
+  <div style="margin-top: -20px">
+    <vxe-toolbar custom print ref="deviceToolbar">
       <template #buttons>
-        <vxe-button @click="allAlign = 'left'">居左</vxe-button>
-        <vxe-button @click="allAlign = 'center'">居中</vxe-button>
-        <vxe-button @click="allAlign = 'right'">居右</vxe-button>
+        <vxe-button content="刷新" @click="this.getData('device')"></vxe-button>
+        <vxe-button content="对齐">
+          <template #dropdowns>
+            <vxe-button @click="allAlign = 'left'">居左</vxe-button>
+            <vxe-button @click="allAlign = 'center'">居中</vxe-button>
+            <vxe-button @click="allAlign = 'right'">居右</vxe-button>
+          </template>
+        </vxe-button>
       </template>
     </vxe-toolbar>
     <vxe-table
@@ -14,6 +19,7 @@
       highlight-hover-row
       :align="allAlign"
       :data="rowData"
+      ref="deviceTable"
     >
       <vxe-table-column
         v-for="(config, index) in columnDefs"
@@ -88,6 +94,11 @@
     },
     mounted() {
       this.getData('device')
+      this.$nextTick(() => {
+        // 将表格和工具栏进行关联
+        const deviceTable = this.$refs.deviceTable
+        deviceTable.connect(this.$refs.deviceToolbar)
+      })
     },
     methods: {
       getData(table) {
