@@ -13,57 +13,102 @@
       show-overflow
       highlight-hover-row
       :align="allAlign"
-      :data="tableData"
+      :data="rowData"
     >
-      <vxe-table-column type="seq" title="序号" width="60" />
-      <vxe-table-column field="name" title="姓名" />
-      <vxe-table-column field="sex" title="性别" />
-      <vxe-table-column field="age" title="年龄" />
+      <vxe-table-column
+        v-for="(config, index) in columnDefs"
+        :key="index"
+        v-bind="config"
+      />
     </vxe-table>
+    <vxe-pager
+      :loading="loading"
+      :current-page="current"
+      :page-size="pageSize"
+      :total="total"
+      :layouts="[
+        'PrevPage',
+        'JumpNumber',
+        'NextPage',
+        'FullJump',
+        'Sizes',
+        'Total',
+      ]"
+      @page-change="handlePageChange"
+    />
   </div>
 </template>
 
 <script>
+  import { getPageData } from '@/api/table'
+
   export default {
     name: 'demo01',
     data() {
       return {
+        loading: false,
         allAlign: null,
-        tableData: [
+        columnDefs: [
           {
-            id: 10001,
-            name: 'Test1',
-            role: 'Develop',
-            sex: 'Man',
-            age: 28,
-            address: 'vxe-table 从入门到放弃',
+            type: 'seq',
+            width: 60,
+            fixed: null,
           },
           {
-            id: 10002,
-            name: 'Test2',
-            role: 'Test',
-            sex: 'Women',
-            age: 22,
-            address: 'Guangzhou',
+            type: 'checkbox',
+            width: 50,
+            fixed: null,
           },
           {
-            id: 10003,
-            name: 'Test3',
-            role: 'PM',
-            sex: 'Man',
-            age: 32,
-            address: 'Shanghai',
+            title: 'ID',
+            field: 'id',
           },
           {
-            id: 10004,
-            name: 'Test4',
-            role: 'Designer',
-            sex: 'Women ',
-            age: 24,
-            address: 'Shanghai',
+            title: '车牌号',
+            field: 'plate',
+          },
+          {
+            title: '司机名',
+            field: 'driver',
+          },
+          {
+            title: '手机号',
+            field: 'phone',
+          },
+          {
+            title: '油耗',
+            field: 'fuel',
           },
         ],
+        rowData: null,
+        current: 1,
+        pageSize: 15,
+        total: 0,
       }
+    },
+    mounted() {
+      this.getData('device')
+    },
+    methods: {
+      getData(table) {
+        this.loading = true
+        // 分页条件
+        let params = {
+          table: table,
+          pageSize: this.pageSize,
+          pageNum: this.current,
+        }
+        getPageData(params, { filter: {}, sorter: {} }).then((res) => {
+          this.rowData = res.data.pageData
+          this.total = res.data.totalCnt
+          this.loading = false
+        })
+      },
+      handlePageChange({ currentPage, pageSize }) {
+        this.current = currentPage
+        this.pageSize = pageSize
+        this.getData('device')
+      },
     },
   }
 </script>
