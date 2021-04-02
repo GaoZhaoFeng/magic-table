@@ -19,10 +19,24 @@ docker exec -it mongo mongo admin
 ```
 ### 3.创建一个名为 admin，密码为 123456 的用户。
 ```shell
-db.createUser({ user:'admin',pwd:'123456',roles:[ { role:'userAdminAnyDatabase', db: 'admin'},"readWriteAnyDatabase"]});
+db.createUser({ user:'admin',pwd:'tooldev',roles:[ { role:'userAdminAnyDatabase', db: 'admin'},"readWriteAnyDatabase"]});
 ```
 ### 4.尝试使用上面创建的用户信息进行连接。
-> db.auth('admin', '123456')
+> db.auth('admin', 'tooldev')
 
 ## 对应ag-grid后端实现参考
 > https://github.com/ag-grid/ag-grid-server-side-oracle-example
+
+## 注册信息
+> http://localhost:9527/api/user/register
+```json
+{
+  "avatar": "https://i.loli.net/2019/11/02/WjfdAirGBtRZC7U.jpg",
+  "desc": "我是管理员",
+  "email": "admin@qq.com",
+  "nickname": "管理员",
+  "password": "123456",
+  "phone": "17601324488",
+  "username": "admin"
+}
+```
