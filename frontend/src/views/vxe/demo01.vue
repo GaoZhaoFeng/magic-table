@@ -38,8 +38,10 @@
       show-header-overflow
       show-overflow
       highlight-hover-row
+      :sort-config="{ multiple: true, remote: true }"
       :align="allAlign"
       :data="rowData"
+      @sort-change="sortChangeEvent"
       ref="deviceTable"
     >
       <vxe-table-column
@@ -73,6 +75,7 @@
     name: 'demo01',
     data() {
       return {
+        tableName: 'device',
         loading: false,
         allAlign: null,
         columnDefs: [
@@ -93,18 +96,22 @@
           {
             title: '车牌号',
             field: 'plate',
+            sortable: true,
           },
           {
             title: '司机名',
             field: 'driver',
+            sortable: true,
           },
           {
             title: '手机号',
             field: 'phone',
+            sortable: true,
           },
           {
             title: '油耗',
             field: 'fuel',
+            sortable: true,
           },
         ],
         rowData: null,
@@ -113,8 +120,21 @@
         total: 0,
       }
     },
+    computed: {
+      filterName: function () {
+        return 'table_filter_' + this.tableName
+      },
+      sorterName: function () {
+        return 'table_sorter_' + this.tableName
+      },
+    },
     mounted() {
-      this.getData('device')
+      let sorter = localStorage.getItem(this.sorterName)
+      let sorterObj = JSON.parse(sorter)
+      for (let key in sorterObj) {
+        console.log(key)
+      }
+      this.getData(this.tableName, {}, sorter)
       this.$nextTick(() => {
         // 将表格和工具栏进行关联
         const deviceTable = this.$refs.deviceTable
@@ -122,7 +142,7 @@
       })
     },
     methods: {
-      getData(table) {
+      getData(table, filter, sorter) {
         this.loading = true
         // 分页条件
         let params = {
@@ -130,7 +150,7 @@
           pageSize: this.pageSize,
           pageNum: this.current,
         }
-        getPageData(params, { filter: {}, sorter: {} }).then((res) => {
+        getPageData(params, { filter: filter, sorter: sorter }).then((res) => {
           this.rowData = res.data.pageData
           this.total = res.data.totalCnt
           this.loading = false
@@ -139,7 +159,19 @@
       handlePageChange({ currentPage, pageSize }) {
         this.current = currentPage
         this.pageSize = pageSize
-        this.getData('device')
+        let sorter = localStorage.getItem(this.sorterName)
+        this.getData(this.tableName, {}, sorter)
+      },
+      sortChangeEvent({ sortList }) {
+        console.log('打印排序顺序')
+        let sorter = {}
+        sortList.map((item) => {
+          sorter[item.property] = item.order === 'asc' ? 1 : -1
+        })
+        console.log(sorter)
+        // 将sorter存到localStorage
+        localStorage.setItem(this.sorterName, JSON.stringify(sorter))
+        this.getData(this.tableName, {}, sorter)
       },
     },
   }
