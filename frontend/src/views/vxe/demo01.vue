@@ -130,10 +130,6 @@
     },
     mounted() {
       let sorter = localStorage.getItem(this.sorterName)
-      let sorterObj = JSON.parse(sorter)
-      for (let key in sorterObj) {
-        console.log(key)
-      }
       this.getData(this.tableName, {}, sorter)
       this.$nextTick(() => {
         // 将表格和工具栏进行关联
@@ -154,6 +150,7 @@
           this.rowData = res.data.pageData
           this.total = res.data.totalCnt
           this.loading = false
+          this.loadSorter()
         })
       },
       handlePageChange({ currentPage, pageSize }) {
@@ -163,6 +160,7 @@
         this.getData(this.tableName, {}, sorter)
       },
       sortChangeEvent({ sortList }) {
+        console.log(sortList)
         console.log('打印排序顺序')
         let sorter = {}
         sortList.map((item) => {
@@ -172,6 +170,20 @@
         // 将sorter存到localStorage
         localStorage.setItem(this.sorterName, JSON.stringify(sorter))
         this.getData(this.tableName, {}, sorter)
+      },
+      loadSorter() {
+        let sorter = localStorage.getItem(this.sorterName)
+        let sorterObj = JSON.parse(sorter)
+        for (let key in sorterObj) {
+          console.log({
+            field: key,
+            order: sorterObj[key] === 1 ? 'asc' : 'desc',
+          })
+          this.$refs.deviceTable.sort({
+            field: key,
+            order: sorterObj[key] === 1 ? 'asc' : 'desc',
+          })
+        }
       },
     },
   }
