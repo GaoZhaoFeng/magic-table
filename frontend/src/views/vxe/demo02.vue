@@ -7,25 +7,25 @@
       <vxe-button size="mini" content="超小尺寸"></vxe-button>
     </p>
     <vxe-table border height="400" :data="tableData">
-      <vxe-table-column type="seq" width="60"></vxe-table-column>
+      <vxe-table-column type="seq" width="60" />
       <vxe-table-column
         field="name"
         title="文本筛选"
         :filters="[{ data: null }]"
         :filter-render="{ name: 'FilterInput' }"
-      ></vxe-table-column>
+      />
       <vxe-table-column
         field="role"
         title="实现条件的筛选"
         :filters="[{ data: { type: 'has', name: '' } }]"
         :filter-render="{ name: 'FilterComplex' }"
-      ></vxe-table-column>
+      />
       <vxe-table-column
         field="age"
         title="实现内容的筛选"
         :filters="[{ data: { vals: [], sVal: '' } }]"
         :filter-render="{ name: 'FilterContent' }"
-      ></vxe-table-column>
+      />
       <vxe-table-column
         field="address"
         title="实现Excel复杂的筛选"
@@ -45,7 +45,7 @@
           },
         ]"
         :filter-render="{ name: 'FilterExcel' }"
-      ></vxe-table-column>
+      />
     </vxe-table>
   </div>
 </template>
@@ -59,7 +59,7 @@
   VXETable.renderer.add('FilterInput', {
     // 筛选模板
     renderFilter(renderOpts, params) {
-      return [<filter-input params={params}></filter-input>]
+      return [<filter-input params={params} />]
     },
     // 重置数据方法
     filterResetMethod(params) {
@@ -90,7 +90,7 @@
     showFilterFooter: false,
     // 筛选模板
     renderFilter(renderOpts, params) {
-      return [<filter-complex params={params}></filter-complex>]
+      return [<filter-complex params={params} />]
     },
     // 重置数据方法
     filterResetMethod(params) {
@@ -117,7 +117,7 @@
     showFilterFooter: false,
     // 筛选模板
     renderFilter(renderOpts, params) {
-      return [<filter-content params={params}></filter-content>]
+      return [<filter-content params={params} />]
     },
     // 重置数据方法
     filterResetMethod(params) {
@@ -141,7 +141,7 @@
     showFilterFooter: false,
     // 筛选模板
     renderFilter(renderOpts, params) {
-      return [<filter-excel params={params}></filter-excel>]
+      return [<filter-excel params={params} />]
     },
     // 重置数据方法
     filterResetMethod(params) {
