@@ -360,20 +360,8 @@
         let filter = localStorage.getItem(this.filterName)
         this.getData(this.tableName, filter, sorter)
       },
-      filterChangeEvent({
-        column,
-        property,
-        values,
-        datas,
-        filterList,
-        $event,
-      }) {
-        console.log(column)
-        console.log(property)
-        console.log(values)
-        console.log(datas)
+      filterChangeEvent({ filterList }) {
         console.log(filterList)
-        console.log($event)
       },
     },
   }
