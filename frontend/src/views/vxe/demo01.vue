@@ -2,7 +2,7 @@
   <div style="margin-top: -20px">
     <vxe-toolbar custom print ref="deviceToolbar">
       <template #buttons>
-        <vxe-button content="刷新" @click="this.getData('device')" />
+        <vxe-button content="刷新" @click="refresh()" />
         <vxe-button content="对齐">
           <template #dropdowns>
             <vxe-button @click="allAlign = 'left'">居左</vxe-button>
@@ -29,6 +29,13 @@
             <vxe-button>删除勾选</vxe-button>
             <vxe-button>复制勾选</vxe-button>
             <vxe-button>清空表格</vxe-button>
+          </template>
+        </vxe-button>
+        <vxe-button content="排序操作">
+          <template #dropdowns>
+            <vxe-button @click="loadSorter">加载排序</vxe-button>
+            <vxe-button>自定义排序</vxe-button>
+            <vxe-button @click="clearSorter()">清除排序</vxe-button>
           </template>
         </vxe-button>
       </template>
@@ -184,6 +191,16 @@
             order: sorterObj[key] === 1 ? 'asc' : 'desc',
           })
         }
+      },
+      clearSorter() {
+        this.$refs.deviceTable.clearSort()
+        localStorage.removeItem(this.sorterName)
+        this.refresh()
+      },
+      refresh() {
+        let sorter = localStorage.getItem(this.sorterName)
+        let filter = localStorage.getItem(this.filterName)
+        this.getData(this.tableName, filter, sorter)
       },
     },
   }
