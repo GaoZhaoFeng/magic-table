@@ -48,11 +48,14 @@
       :filter-config="{
         iconNone: 'ri-menu-fill',
         iconMatch: 'ri-menu-add-fill',
+        multiple: true,
+        remote: true,
       }"
       :sort-config="{ multiple: true, remote: true }"
       :align="allAlign"
       :data="rowData"
       @sort-change="sortChangeEvent"
+      @filter-change="filterChangeEvent"
       ref="deviceTable"
     >
       <vxe-table-column
@@ -210,7 +213,6 @@
             return false
           },
         })
-
         // 创建一个条件的渲染器
         VXETable.renderer.add('FilterComplex', {
           // 不显示底部按钮，使用自定义的按钮
@@ -237,7 +239,6 @@
             return false
           },
         })
-
         // 创建一个支持列内容的筛选
         VXETable.renderer.add('FilterContent', {
           // 不显示底部按钮，使用自定义的按钮
@@ -261,7 +262,6 @@
             return vals.includes(cellValue)
           },
         })
-
         // 创建一个实现Excel的筛选器
         VXETable.renderer.add('FilterExcel', {
           // 不显示底部按钮，使用自定义的按钮
@@ -359,6 +359,21 @@
         let sorter = localStorage.getItem(this.sorterName)
         let filter = localStorage.getItem(this.filterName)
         this.getData(this.tableName, filter, sorter)
+      },
+      filterChangeEvent({
+        column,
+        property,
+        values,
+        datas,
+        filterList,
+        $event,
+      }) {
+        console.log(column)
+        console.log(property)
+        console.log(values)
+        console.log(datas)
+        console.log(filterList)
+        console.log($event)
       },
     },
   }

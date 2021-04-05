@@ -151,7 +151,7 @@
         $panel.resetFilter()
       },
       childMenuClickEvent(cItem) {
-        this.$XModal.alert({ message: cItem.label })
+        alert(cItem.label)
       },
     },
   }
@@ -229,7 +229,7 @@
     content: '';
     position: absolute;
     width: 90px;
-    right: 0;
+    left: 0;
     bottom: 0;
     border-bottom: 1px solid #e2e4e7;
   }
@@ -240,7 +240,7 @@
     .my-fe-child-menu-group-list
     > .my-fe-child-menu-item {
     position: relative;
-    padding: 4px 20px 4px 30px;
+    padding: 4px 20px 4px -10px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
