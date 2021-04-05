@@ -45,6 +45,10 @@
       show-header-overflow
       show-overflow
       highlight-hover-row
+      :filter-config="{
+        iconNone: 'ri-menu-fill',
+        iconMatch: 'ri-menu-add-fill',
+      }"
       :sort-config="{ multiple: true, remote: true }"
       :align="allAlign"
       :data="rowData"
@@ -104,6 +108,10 @@
             title: '车牌号',
             field: 'plate',
             sortable: true,
+            filters: [
+              { label: '前端', value: '前端' },
+              { label: '后端', value: '后端' },
+            ],
           },
           {
             title: '司机名',
