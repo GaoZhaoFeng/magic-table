@@ -81,6 +81,8 @@
 
 <script>
   import { getPageData } from '@/api/table'
+  import VXETable from 'vxe-table'
+  import XEUtils from 'xe-utils'
 
   export default {
     name: 'demo01',
@@ -108,25 +110,50 @@
             title: '车牌号',
             field: 'plate',
             sortable: true,
-            filters: [
-              { label: '前端', value: '前端' },
-              { label: '后端', value: '后端' },
-            ],
+            filters: [{ data: null }],
+            filterRender: {
+              name: 'FilterInput',
+            },
           },
           {
             title: '司机名',
             field: 'driver',
             sortable: true,
+            filters: [{ data: { type: 'has', name: '' } }],
+            filterRender: {
+              name: 'FilterComplex',
+            },
           },
           {
             title: '手机号',
             field: 'phone',
             sortable: true,
+            filters: [{ data: { vals: [], sVal: '' } }],
+            filterRender: {
+              name: 'FilterContent',
+            },
           },
           {
             title: '油耗',
             field: 'fuel',
             sortable: true,
+            filters: [
+              {
+                data: {
+                  vals: [],
+                  sVal: '',
+                  fMenu: '',
+                  f1Type: '',
+                  f1Val: '',
+                  fMode: 'and',
+                  f2Type: '',
+                  f2Val: '',
+                },
+              },
+            ],
+            filterRender: {
+              name: 'FilterExcel',
+            },
           },
         ],
         rowData: null,
@@ -144,6 +171,7 @@
       },
     },
     mounted() {
+      this.addMyFilters()
       let sorter = localStorage.getItem(this.sorterName)
       this.getData(this.tableName, {}, sorter)
       this.$nextTick(() => {
@@ -153,6 +181,128 @@
       })
     },
     methods: {
+      addMyFilters() {
+        // 创建一个简单的输入框筛选
+        VXETable.renderer.add('FilterInput', {
+          // 筛选模板
+          renderFilter(renderOpts, params) {
+            return [<filter-input params={params} />]
+          },
+          // 重置数据方法
+          filterResetMethod(params) {
+            const { options } = params
+            options.forEach((option) => {
+              option.data = ''
+            })
+          },
+          // 重置筛选复原方法（当未点击确认时，该选项将被恢复为默认值）
+          filterRecoverMethod({ option }) {
+            option.data = ''
+          },
+          // 筛选方法
+          filterMethod(params) {
+            const { option, row, column } = params
+            const { data } = option
+            const cellValue = XEUtils.get(row, column.property)
+            if (cellValue) {
+              return cellValue.indexOf(data) > -1
+            }
+            return false
+          },
+        })
+
+        // 创建一个条件的渲染器
+        VXETable.renderer.add('FilterComplex', {
+          // 不显示底部按钮，使用自定义的按钮
+          showFilterFooter: false,
+          // 筛选模板
+          renderFilter(renderOpts, params) {
+            return [<filter-complex params={params} />]
+          },
+          // 重置数据方法
+          filterResetMethod(params) {
+            const { options } = params
+            options.forEach((option) => {
+              option.data = { type: 'has', name: '' }
+            })
+          },
+          // 筛选数据方法
+          filterMethod(params) {
+            const { option, row, column } = params
+            const cellValue = XEUtils.get(row, column.property)
+            const { name } = option.data
+            if (cellValue) {
+              return cellValue.indexOf(name) > -1
+            }
+            return false
+          },
+        })
+
+        // 创建一个支持列内容的筛选
+        VXETable.renderer.add('FilterContent', {
+          // 不显示底部按钮，使用自定义的按钮
+          showFilterFooter: false,
+          // 筛选模板
+          renderFilter(renderOpts, params) {
+            return [<filter-content params={params} />]
+          },
+          // 重置数据方法
+          filterResetMethod(params) {
+            const { options } = params
+            options.forEach((option) => {
+              option.data = { vals: [], sVal: '' }
+            })
+          },
+          // 筛选数据方法
+          filterMethod(params) {
+            const { option, row, column } = params
+            const { vals } = option.data
+            const cellValue = XEUtils.get(row, column.property)
+            return vals.includes(cellValue)
+          },
+        })
+
+        // 创建一个实现Excel的筛选器
+        VXETable.renderer.add('FilterExcel', {
+          // 不显示底部按钮，使用自定义的按钮
+          showFilterFooter: false,
+          // 筛选模板
+          renderFilter(renderOpts, params) {
+            return [<filter-excel params={params} />]
+          },
+          // 重置数据方法
+          filterResetMethod(params) {
+            const { options } = params
+            options.forEach((option) => {
+              option.data = {
+                vals: [],
+                sVal: '',
+                fMenu: '',
+                f1Type: '',
+                f1Val: '',
+                fMode: 'and',
+                f2Type: '',
+                f2Val: '',
+              }
+            })
+          },
+          // 筛选数据方法
+          filterMethod(params) {
+            const { option, row, column } = params
+            const cellValue = XEUtils.get(row, column.property)
+            const { vals, f1Type, f1Val } = option.data
+            if (cellValue) {
+              if (f1Type) {
+                return cellValue.indexOf(f1Val) > -1
+              } else if (vals.length) {
+                // 通过指定值筛选
+                return vals.includes(cellValue)
+              }
+            }
+            return false
+          },
+        })
+      },
       getData(table, filter, sorter) {
         this.loading = true
         // 分页条件
