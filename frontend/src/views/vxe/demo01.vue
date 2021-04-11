@@ -362,6 +362,27 @@
       },
       filterChangeEvent({ filterList }) {
         console.log(filterList)
+        for (let i = 0; i < filterList.length; i++) {
+          let filter = filterList[i]
+          let filterName = filter.column.filterRender.name
+          console.log('过滤器名: ' + filterName)
+          let columnName = filter.column.property
+          console.log('列名: ' + columnName)
+          let filterDatas = filter.datas
+          if (filterName === 'FilterInput') {
+            let filterData = filterDatas[0]
+            console.log('过滤信息：' + filterData)
+          }
+          if (filterName === 'FilterComplex') {
+            let filterData = filterDatas[0]
+            // 运算符号 has(包含)、eq(等于)、ne(不等于)、gt(大于)、gte(大于等于)、lt(小于)、lte(小于等于)
+            let operator = filterData.type
+            // 输入的过滤内容
+            let content = filterData.name
+            console.log('操作符：' + operator)
+            console.log('筛选内容：' + content)
+          }
+        }
       },
     },
   }

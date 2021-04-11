@@ -7,12 +7,28 @@
       <vxe-radio v-model="option.data.type" name="fType" label="eq">
         等于
       </vxe-radio>
+      <vxe-radio v-model="option.data.type" name="fType" label="ne">
+        不等于
+      </vxe-radio>
+      <vxe-radio v-model="option.data.type" name="fType" label="gt">
+        大于
+      </vxe-radio>
+      <vxe-radio v-model="option.data.type" name="fType" label="gte">
+        大于等于
+      </vxe-radio>
+      <vxe-radio v-model="option.data.type" name="fType" label="lt">
+        小于
+      </vxe-radio>
+      <vxe-radio v-model="option.data.type" name="fType" label="lte">
+        小于等于
+      </vxe-radio>
     </div>
     <div class="my-fc-name">
       <vxe-input
         v-model="option.data.name"
         type="text"
         placeholder="请输入名称"
+        @keyup="keyupEvent"
         @input="changeOptionEvent()"
       ></vxe-input>
     </div>
@@ -55,6 +71,11 @@
       confirmEvent() {
         const { $panel } = this.params
         $panel.confirmFilter()
+      },
+      keyupEvent({ $event }) {
+        if ($event.keyCode === 13) {
+          this.confirmEvent()
+        }
       },
       resetEvent() {
         const { $panel } = this.params
