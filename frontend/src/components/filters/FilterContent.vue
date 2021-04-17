@@ -6,6 +6,7 @@
           v-model="option.data.sVal"
           placeholder="搜索"
           suffix-icon="fa fa-search"
+          @keyup="sValChangeEvent"
         ></vxe-input>
       </div>
       <div class="my-fc-search-content">
@@ -56,6 +57,7 @@
         option: null,
         colValList: [],
         valList: [],
+        colValListInit: [],
       }
     },
     created() {
@@ -81,6 +83,7 @@
         this.option = option
         this.colValList = colValList
         this.valList = colValList
+        this.colValListInit = colValList
       },
       searchEvent() {
         const { option, colValList } = this
@@ -109,6 +112,24 @@
       resetFilterEvent() {
         const { $panel } = this.params
         $panel.resetFilter()
+      },
+      sValChangeEvent() {
+        if (this.option.data.sVal === '') {
+          this.colValList = this.colValListInit
+          this.valList = this.colValListInit
+          return
+        }
+        const colValListNew = []
+        for (let i = 0; i < this.colValList.length; i++) {
+          if (this.colValList[i].value.indexOf(this.option.data.sVal) > 0) {
+            colValListNew.push({
+              checked: false,
+              value: this.colValList[i].value,
+            })
+          }
+        }
+        this.colValList = colValListNew
+        this.valList = colValListNew
       },
     },
   }
