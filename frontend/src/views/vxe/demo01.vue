@@ -131,7 +131,7 @@
             title: '手机号',
             field: 'phone',
             sortable: true,
-            filters: [{ data: { vals: [], sVal: '' } }],
+            filters: [{ data: { vals: ['1', '2', '3'], sVal: '2' } }],
             filterRender: {
               name: 'FilterContent',
             },
@@ -381,6 +381,11 @@
             let content = filterData.name
             console.log('操作符：' + operator)
             console.log('筛选内容：' + content)
+          }
+          if (filterName === 'FilterContent') {
+            let filterData = filterDatas[0]
+            console.log('勾选的项数：' + filterData.vals.length)
+            console.log('勾选的内容：' + filterData.vals)
           }
         }
       },
