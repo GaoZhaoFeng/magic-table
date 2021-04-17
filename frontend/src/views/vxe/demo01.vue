@@ -132,7 +132,7 @@
             field: 'phone',
             sortable: true,
             // vals表示默认勾选的值，sVal表示默认筛选的值
-            filters: [{ data: { vals: ['1', '2', '3'], sVal: '2' } }],
+            filters: [{ data: { vals: ['1', '2', '3'], sVal: '94' } }],
             filterRender: {
               name: 'FilterContent',
             },

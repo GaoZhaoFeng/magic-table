@@ -84,6 +84,7 @@
         this.colValList = colValList
         this.valList = colValList
         this.colValListInit = colValList
+        this.sValChangeEvent() // 处理下之前默认加载的筛选值
       },
       searchEvent() {
         const { option, colValList } = this
@@ -117,13 +118,14 @@
         if (this.option.data.sVal === '') {
           this.colValList = this.colValListInit
           this.valList = this.colValListInit
+          this.isAll = false
           return
         }
         const colValListNew = []
         for (let i = 0; i < this.colValList.length; i++) {
           if (this.colValList[i].value.indexOf(this.option.data.sVal) > 0) {
             colValListNew.push({
-              checked: false,
+              checked: this.colValList[i].checked,
               value: this.colValList[i].value,
             })
           }
