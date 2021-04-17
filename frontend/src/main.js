@@ -13,6 +13,7 @@ import FilterInput from './components/filters/FilterInput.vue'
 import FilterContent from './components/filters/FilterContent.vue'
 import FilterComplex from './components/filters/FilterComplex.vue'
 import FilterExcel from './components/filters/FilterExcel.vue'
+import FilterDate from './components/filters/FilterDate.vue'
 
 createApp(App)
   // 引用第三方库
@@ -25,4 +26,5 @@ createApp(App)
   .component(FilterContent.name, FilterContent)
   .component(FilterComplex.name, FilterComplex)
   .component(FilterExcel.name, FilterExcel)
+  .component(FilterDate.name, FilterDate)
   .mount('#app')

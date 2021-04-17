@@ -1,5 +1,5 @@
 <template>
-  <div class="my-filter-complex">
+  <div class="my-filter-date">
     <div class="my-fc-type">
       <vxe-radio v-model="option.data.type" name="fType" label="eq">
         on
@@ -71,14 +71,14 @@
 </script>
 
 <style scoped>
-  .my-filter-complex {
+  .my-filter-date {
     width: 260px;
     padding: 5px 15px 10px 15px;
   }
-  .my-filter-complex .my-fc-type {
+  .my-filter-date .my-fc-type {
     padding: 8px 0;
   }
-  .my-filter-complex .my-fc-footer {
+  .my-filter-date .my-fc-footer {
     text-align: center;
   }
 </style>

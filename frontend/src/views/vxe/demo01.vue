@@ -108,6 +108,11 @@
           {
             title: 'ID',
             field: 'id',
+            sortable: true,
+            filters: [{ data: { type: 'on', name: '' } }],
+            filterRender: {
+              name: 'FilterDate',
+            },
           },
           {
             title: '车牌号',
@@ -227,6 +232,32 @@
             const { options } = params
             options.forEach((option) => {
               option.data = { type: 'has', name: '' }
+            })
+          },
+          // 筛选数据方法
+          filterMethod(params) {
+            const { option, row, column } = params
+            const cellValue = XEUtils.get(row, column.property)
+            const { name } = option.data
+            if (cellValue) {
+              return cellValue.indexOf(name) > -1
+            }
+            return false
+          },
+        })
+        // 创建一个日期的渲染器
+        VXETable.renderer.add('FilterDate', {
+          // 不显示底部按钮，使用自定义的按钮
+          showFilterFooter: false,
+          // 筛选模板
+          renderFilter(renderOpts, params) {
+            return [<filter-date params={params} />]
+          },
+          // 重置数据方法
+          filterResetMethod(params) {
+            const { options } = params
+            options.forEach((option) => {
+              option.data = { type: 'on', name: '' }
             })
           },
           // 筛选数据方法
