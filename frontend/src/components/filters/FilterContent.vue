@@ -64,9 +64,12 @@
     methods: {
       load() {
         const { $table, column } = this.params
-        const { fullData } = $table.getTableData()
+        console.log($table)
+        console.log(column)
+        const { fullData } = $table.getTableData() // Todo：改成后端获取
         const option = column.filters[0]
         const { vals } = option.data
+        // Todo：colValList就是下拉多选展开的多个可勾选项，最好改成后端获取
         const colValList = Object.keys(
           XEUtils.groupBy(fullData, column.property)
         ).map((val) => {
