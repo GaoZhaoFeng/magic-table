@@ -36,4 +36,13 @@ public class BookController {
         resultVO = new ResultVO<>(postBookInfoSuccess.getCode(), postBookInfoSuccess.getMessage(), insertBook);
         return resultVO;
     }
+    @GetMapping("/listBooks")
+    @ApiOperation("获取书籍信息")
+    ResultVO<JSONObject> getBooksData(){
+        ResultVO<JSONObject> resultVO;
+        JSONObject queryAllBooks = bookService.queryAllBooks();
+        ResultEnum postBookInfoSuccess = ResultEnum.GET_BOOK_INFO_SUCCESS;
+        resultVO = new ResultVO<>(postBookInfoSuccess.getCode(), postBookInfoSuccess.getMessage(), queryAllBooks);
+        return resultVO;
+    }
 }

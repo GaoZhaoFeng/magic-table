@@ -74,6 +74,16 @@ public class BookServiceImpl implements BookService {
         result.put("url",url);
         return result;
     }
+
+    @Override
+    public JSONObject queryAllBooks() {
+        JSONObject result = new JSONObject();
+        List<BookInfo> all = bookInfoDao.findAll();
+        result.put("count",all.size());
+        result.put("books",all);
+        return result;
+    }
+
     public BookInfo spiderBook(Document parse,BookInfo bookInfo){
         //书名
         String bookName = parse.select(".name_info").get(0).select("h1").get(0).attr("title");

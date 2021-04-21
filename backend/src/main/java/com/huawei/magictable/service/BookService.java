@@ -13,4 +13,6 @@ public interface BookService {
     JSONObject insertBookByURl(String url);
 
     JSONObject insertBooksByURl(String url);
+
+    JSONObject queryAllBooks();
 }

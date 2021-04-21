@@ -18,7 +18,8 @@ public enum ResultEnum {
     GET_INFO_SUCCESS(0, "获取用户信息成功"),
     PARAM_ERR(1, "参数不正确"),
     GET_PAGE_DATA_SUCCESS(0, "获取指定条件下的分页数据成功"),
-    POST_BOOK_INFO_SUCCESS(0,"根据URL插入书籍成功");
+    POST_BOOK_INFO_SUCCESS(0,"根据URL插入书籍成功"),
+    GET_BOOK_INFO_SUCCESS(0,"根据URL插入书籍成功");
 
     ResultEnum(Integer code, String message) {
         this.code = code;
