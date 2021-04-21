@@ -11,14 +11,21 @@ spring:
   data:
     mongodb:
       authentication-database: admin
-      host: 192.168.56.103
+      host: 101.200.157.120
       port: 27017
       database: magictable
       username: admin
-      password: tooldev
+      password: "@WSX1qaz"
+  datasource:
+    url: jdbc:mysql://101.200.157.120/magictable
+    username: root
+    password: "@WSX1qaz"
+    driver-class-name: com.mysql.jdbc.Driver
 
+  jpa:
+    hibernate:
+      ddl-auto: update
 # 拦截器相关的配置
 interceptors:
   # 不需要进行鉴权的接口地址，用逗号隔开
   auth-ignore-uris: ${server.servlet.context-path}/user/register,${server.servlet.context-path}/user/login
-
