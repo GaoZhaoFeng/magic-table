@@ -6,7 +6,6 @@
           v-model="option.data.sVal"
           placeholder="搜索"
           suffix-icon="fa fa-search"
-          @keyup="sValChangeEvent"
         ></vxe-input>
       </div>
       <div class="my-fc-search-content">
@@ -57,7 +56,6 @@
         option: null,
         colValList: [],
         valList: [],
-        colValListInit: [],
       }
     },
     created() {
@@ -66,12 +64,9 @@
     methods: {
       load() {
         const { $table, column } = this.params
-        console.log($table)
-        console.log(column)
-        const { fullData } = $table.getTableData() // Todo：改成后端获取
+        const { fullData } = $table.getTableData()
         const option = column.filters[0]
         const { vals } = option.data
-        // Todo：colValList就是下拉多选展开的多个可勾选项，最好改成后端获取
         const colValList = Object.keys(
           XEUtils.groupBy(fullData, column.property)
         ).map((val) => {
@@ -83,8 +78,6 @@
         this.option = option
         this.colValList = colValList
         this.valList = colValList
-        this.colValListInit = colValList
-        this.sValChangeEvent() // 处理下之前默认加载的筛选值
       },
       searchEvent() {
         const { option, colValList } = this
@@ -113,25 +106,6 @@
       resetFilterEvent() {
         const { $panel } = this.params
         $panel.resetFilter()
-      },
-      sValChangeEvent() {
-        if (this.option.data.sVal === '') {
-          this.colValList = this.colValListInit
-          this.valList = this.colValListInit
-          this.isAll = false
-          return
-        }
-        const colValListNew = []
-        for (let i = 0; i < this.colValList.length; i++) {
-          if (this.colValList[i].value.indexOf(this.option.data.sVal) > 0) {
-            colValListNew.push({
-              checked: this.colValList[i].checked,
-              value: this.colValList[i].value,
-            })
-          }
-        }
-        this.colValList = colValListNew
-        this.valList = colValListNew
       },
     },
   }

@@ -2,6 +2,7 @@ package com.huawei.magictable.service;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonObject;
 
 public interface BookService {
     /**
@@ -15,4 +16,6 @@ public interface BookService {
     JSONObject insertBooksByURl(String url);
 
     JSONObject queryAllBooks();
+
+    JsonObject queryBookByFilter();
 }

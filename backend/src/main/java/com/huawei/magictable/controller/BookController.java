@@ -1,11 +1,11 @@
 package com.huawei.magictable.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonObject;
 import com.huawei.magictable.enums.ResultEnum;
 import com.huawei.magictable.service.BookService;
 import com.huawei.magictable.vo.ResultVO;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +44,14 @@ public class BookController {
         ResultEnum postBookInfoSuccess = ResultEnum.GET_BOOK_INFO_SUCCESS;
         resultVO = new ResultVO<>(postBookInfoSuccess.getCode(), postBookInfoSuccess.getMessage(), queryAllBooks);
         return resultVO;
+    }
+    @PostMapping("/listBooks")
+    @ApiOperation("获取符合条件的书籍信息")
+    ResultVO<JSONObject> getBookDataByFilter(@RequestBody @ApiParam(name="url",value="类似[{\"property\":\"xxx\",\"operator\":\"=\",\"value\":\"xxx\"}]",required=true)String fifter,String size,String page){
+
+        JsonObject queryAllBooks = bookService.queryBookByFilter();
+        ResultEnum postBookInfoSuccess = ResultEnum.GET_BOOK_INFO_SUCCESS;
+
+        return  new ResultVO<JSONObject>(postBookInfoSuccess.getCode(), postBookInfoSuccess.getMessage(), queryAllBooks);;
     }
 }

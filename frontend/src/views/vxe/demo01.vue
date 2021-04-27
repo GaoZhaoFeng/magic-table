@@ -108,11 +108,6 @@
           {
             title: 'ID',
             field: 'id',
-            sortable: true,
-            filters: [{ data: { type: 'on', name: '' } }],
-            filterRender: {
-              name: 'FilterDate',
-            },
           },
           {
             title: '车牌号',
@@ -136,8 +131,7 @@
             title: '手机号',
             field: 'phone',
             sortable: true,
-            // vals表示默认勾选的值，sVal表示默认筛选的值
-            filters: [{ data: { vals: ['1', '2', '3'], sVal: '94' } }],
+            filters: [{ data: { vals: [], sVal: '' } }],
             filterRender: {
               name: 'FilterContent',
             },
@@ -232,32 +226,6 @@
             const { options } = params
             options.forEach((option) => {
               option.data = { type: 'has', name: '' }
-            })
-          },
-          // 筛选数据方法
-          filterMethod(params) {
-            const { option, row, column } = params
-            const cellValue = XEUtils.get(row, column.property)
-            const { name } = option.data
-            if (cellValue) {
-              return cellValue.indexOf(name) > -1
-            }
-            return false
-          },
-        })
-        // 创建一个日期的渲染器
-        VXETable.renderer.add('FilterDate', {
-          // 不显示底部按钮，使用自定义的按钮
-          showFilterFooter: false,
-          // 筛选模板
-          renderFilter(renderOpts, params) {
-            return [<filter-date params={params} />]
-          },
-          // 重置数据方法
-          filterResetMethod(params) {
-            const { options } = params
-            options.forEach((option) => {
-              option.data = { type: 'on', name: '' }
             })
           },
           // 筛选数据方法
@@ -394,32 +362,6 @@
       },
       filterChangeEvent({ filterList }) {
         console.log(filterList)
-        for (let i = 0; i < filterList.length; i++) {
-          let filter = filterList[i]
-          let filterName = filter.column.filterRender.name
-          console.log('过滤器名: ' + filterName)
-          let columnName = filter.column.property
-          console.log('列名: ' + columnName)
-          let filterDatas = filter.datas
-          if (filterName === 'FilterInput') {
-            let filterData = filterDatas[0]
-            console.log('过滤信息：' + filterData)
-          }
-          if (filterName === 'FilterComplex') {
-            let filterData = filterDatas[0]
-            // 运算符号 has(包含)、eq(等于)、ne(不等于)、gt(大于)、gte(大于等于)、lt(小于)、lte(小于等于)
-            let operator = filterData.type
-            // 输入的过滤内容
-            let content = filterData.name
-            console.log('操作符：' + operator)
-            console.log('筛选内容：' + content)
-          }
-          if (filterName === 'FilterContent') {
-            let filterData = filterDatas[0]
-            console.log('勾选的项数：' + filterData.vals.length)
-            console.log('勾选的内容：' + filterData.vals)
-          }
-        }
       },
     },
   }
